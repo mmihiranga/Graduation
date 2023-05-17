@@ -26,7 +26,6 @@
         "ignore": ["src"]
       }
     ],
-    "prettier/prettier": "off",
     "no-unused-vars": "warn",
     "no-console": "off",
     "func-names": "off",

@@ -60,69 +60,69 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: Fonts.roboto,
+    fontFamily: Fonts.nunitoSans,
     fontSize: 14,
     fontWeight: '400',
     h1: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 28,
       fontWeight: '700',
     },
     h2: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 24,
       fontWeight: '700',
     },
     h3: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 20,
       fontWeight: '700',
     },
     h4: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 16,
       fontWeight: '600',
     },
     h5: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 16,
     },
     h6: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 14,
     },
     body1: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 12,
       fontWeight: 600,
     },
     body2: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 12,
       fontWeight: 400,
     },
     body3: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 18,
       fontWeight: 400,
     },
     body4: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 18,
       fontWeight: 800,
     },
     body5: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 14,
       fontWeight: 400,
     },
     body6: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 14,
       fontWeight: 800,
     },
     small: {
-      fontFamily: Fonts.roboto,
+      fontFamily: Fonts.nunitoSans,
       fontSize: 11,
       fontWeight: 300,
     },
@@ -161,7 +161,7 @@ const theme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          fontFamily: Fonts.roboto,
+          fontFamily: Fonts.nunitoSans,
           fontSize: 12,
           fontWeight: '400',
         },
