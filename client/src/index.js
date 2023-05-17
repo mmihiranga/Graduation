@@ -1,17 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import ReactDOM from 'react-dom';
+import { CookiesProvider } from 'react-cookie';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { CircularProgress, CssBaseline, ThemeProvider } from '@mui/material';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store/Store';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import theme from './values/theme';
+import './index.css';
+import ScrollToTop from './components/ScrollToTop';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+ReactDOM.render(
+  <CookiesProvider>
+    <Provider store={store}>
+      <PersistGate loading={<CircularProgress />} persistor={persistor}>
+        <Router>
+          <ThemeProvider theme={theme}>
+            <CssBaseline enableColorScheme />
+            <ScrollToTop />
+            <App />
+          </ThemeProvider>
+        </Router>
+      </PersistGate>
+    </Provider>
+  </CookiesProvider>,
+  document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
