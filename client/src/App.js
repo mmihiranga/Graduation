@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Box } from '@mui/material';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
+import Home from './pages/home/Home';
 import PageLoader from './components/PageLoader';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
 import Login from './pages/auth/Login';

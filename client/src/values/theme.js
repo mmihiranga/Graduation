@@ -63,6 +63,16 @@ const theme = createTheme({
     fontFamily: Fonts.nunitoSans,
     fontSize: 14,
     fontWeight: '400',
+    title:{
+      fontFamily: Fonts.nunitoSans,
+      fontSize: 45,
+      fontWeight: '800',
+    },
+    subtitle:{
+      fontFamily: Fonts.nunitoSans,
+      fontSize: 35,
+      fontWeight: '800',
+    },
     h1: {
       fontFamily: Fonts.nunitoSans,
       fontSize: 28,

@@ -51,11 +51,14 @@ export const Colors = {
   blueLight: '#e5f5ff',
   blueText: '#3B79B7',
   blueShade: '#6dadeb',
-
+  blueBurn : '#2d3545b3',
   discountBlue: '#4DA6FF',
 
   infoBg: '#EDF2F7',
+  subTitle: '#414c64',
 
   orangeLight: '#FFEFE1',
   orangeDark: '#FF8420',
+
+  yellow : '#ffc107',
 };
