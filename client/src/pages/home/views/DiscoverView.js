@@ -8,13 +8,14 @@ const DiscoverView = () => {
     <Box
       sx={{
         width: '100%',
-        height: '500px',
+        height: '580px',
         px: 10,
-        py: 4,
+        py: 8,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         gap: 3,
+        backgroundColor:Colors.white,
       }}
     >
       <Box
@@ -58,7 +59,7 @@ const DiscoverView = () => {
           sx={{
             display: 'flex',
             gap: 2,
-            mt: 2,
+            mt: 5,
           }}
         >
           <Box>

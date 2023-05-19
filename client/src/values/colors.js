@@ -31,6 +31,7 @@ export const Colors = {
   blackTransparent40: '#00000066',
 
   grey: '#faf9f8',
+  backgroundGrey: '#f9f9f9',
   greyLight: '#F8F8F8',
   greyText: '#707070',
   greyDivider: '#E6E6E6',

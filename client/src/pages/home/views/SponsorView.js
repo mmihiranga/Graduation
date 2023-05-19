@@ -11,7 +11,7 @@ const SponsorView = () => {
         px: 20,
         py: 2,
         height: '120px',
-        backgroundColor: Colors.blueLight,
+        // backgroundColor: Colors.blueLight,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -28,7 +28,7 @@ const SponsorView = () => {
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            backgroundColor: Colors.blueLight,
+            backgroundColor: '#f7f8fa',
             transition: 'all 0.4s ease-in-out',
             backgroundBlendMode: 'luminosity',
             '&:hover': {
