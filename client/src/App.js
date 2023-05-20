@@ -10,7 +10,9 @@ import PersistentDrawer from './pages/admin/PersistentDrawer';
 
 function App() {
   const location = useLocation();
-  const isShowHeader = location.pathname === '/login' || location.pathname === '/admin'; // Adjust the path if needed
+  const isShowHeader =
+    location.pathname === '/login' || location.pathname === '/admin'; // Adjust the path if needed
+  const isShowFooter = location.pathname === '/admin'; // Adjust the path if needed
 
   return (
     <Box>
@@ -44,7 +46,7 @@ function App() {
           }
         />
       </Routes>
-      <Footer />
+      {!isShowFooter && <Footer />}
     </Box>
   );
 }

@@ -1,7 +1,13 @@
 import React from 'react';
+import { Box } from '@mui/material';
+import Breadcrumb from '../components/Breadcrumb';
 
 const PackagesView = () => {
-  return <div>PackagesView</div>;
+  return (
+    <Box>
+      <Breadcrumb title="Photography Packages" breadcrumb="Admin Panel/Package" />
+    </Box>
+  );
 };
 
 export default PackagesView;
