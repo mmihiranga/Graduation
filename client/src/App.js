@@ -6,14 +6,15 @@ import PageLoader from './components/PageLoader';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
 import Login from './pages/auth/Login';
 import Footer from './components/Footer';
+import PersistentDrawer from './pages/admin/PersistentDrawer';
 
 function App() {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login'; // Adjust the path if needed
+  const isShowHeader = location.pathname === '/login' || location.pathname === '/admin'; // Adjust the path if needed
 
   return (
     <Box>
-      {!isLoginPage && <ResponsiveAppBar />}
+      {!isShowHeader && <ResponsiveAppBar />}
       {/* Render the HeaderBar component only when not on the login page */}
       <Routes>
         <Route path="/" element={<PageLoader />} />
@@ -30,6 +31,15 @@ function App() {
           element={
             <Suspense fallback={<PageLoader />}>
               <Login />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <PersistentDrawer />
             </Suspense>
           }
         />

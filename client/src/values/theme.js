@@ -103,8 +103,8 @@ const theme = createTheme({
     },
     body1: {
       fontFamily: Fonts.nunitoSans,
-      fontSize: 12,
-      fontWeight: 600,
+      fontSize: 15,
+      fontWeight: 500,
     },
     body2: {
       fontFamily: Fonts.nunitoSans,

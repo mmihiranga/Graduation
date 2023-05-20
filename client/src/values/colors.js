@@ -47,6 +47,10 @@ export const Colors = {
 
   silver: '#E0E0E0',
   silverLight: '#F5F5F5',
+  silverDark: '#BDBDBD',
+  silverText: '#707070',
+  silverDivider: '#E0E0E0',
+  silverBlue: '#f6f9ff',
 
   blueHighlight: '#047AAF',
   blueLight: '#e5f5ff',
@@ -62,4 +66,9 @@ export const Colors = {
   orangeDark: '#FF8420',
 
   yellow : '#ffc107',
+
+  lightPurple:'#4154f1',
+  lightPurpleShade:'#5e6ef9',
+  lightPurpleLight:'#e5e7ff',
+  lightPurpleDark:'#2d3545b3',
 };
