@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { RxDotsHorizontal } from 'react-icons/rx';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { Colors } from '../../../values/colors';
 import IMAGE from '../../../assets/Images/portfolio/portfolio-2.jpg';
 
@@ -55,7 +55,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-const EventCard = ({ eventItem }) => {
+const PackageCard = ({ price, title, description }) => {
   const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
 
@@ -76,14 +76,15 @@ const EventCard = ({ eventItem }) => {
     handleClose();
   };
 
+
   return (
     <Box
       sx={{
-        my: 4,
-        // mx: 15,
+        my: 3,
+        width: '25%',
         backgroundColor: Colors.white,
         borderRadius: 2,
-        boxShadow: '0px 5px 90px 0px rgba(110, 123, 131, 0.09)',
+        boxShadow: '0px 5px 90px 0px rgba(110, 123, 131, 0.29)',
         overflow: 'hidden',
       }}
     >
@@ -98,8 +99,7 @@ const EventCard = ({ eventItem }) => {
           boxSizing: 'border-box',
         }}
       >
-        <Typography>#123</Typography>
-        <Typography>{eventItem?.date}</Typography>
+        <Typography variant="h4">{title}</Typography>
         <Box
           sx={{
             display: 'flex',
@@ -153,9 +153,11 @@ const EventCard = ({ eventItem }) => {
       </Box>
       <Box
         sx={{
+          height: 400,
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           alignItems: 'center',
+          flexDirection: 'column',
           px: 2,
           py: 1,
           boxSizing: 'border-box',
@@ -163,10 +165,9 @@ const EventCard = ({ eventItem }) => {
       >
         <Box
           sx={{
-            flex: 1,
             borderRadius: 2,
-            width: 150,
-            height: 150,
+            width: '100%',
+            height: '100%',
             backgroundImage: `url(${IMAGE})`,
             objectFit: 'contain',
             backgroundSize: 'cover',
@@ -176,27 +177,32 @@ const EventCard = ({ eventItem }) => {
         />
         <Box
           sx={{
-            flex: 3,
             m: 1,
-            alignSelf: 'baseline',
+            gap: 1,
             display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             flexDirection: 'column',
-            justifyContent: 'space-between',
-            height: 150,
           }}
         >
-          <Typography>Event Name : {eventItem?.name}</Typography>
-          <Typography>Description : {eventItem?.description}</Typography>
-          <Typography>Duration : {eventItem?.duration}</Typography>
-          <Typography>Location : {eventItem?.location}</Typography>
+          <Typography
+            variant="h4"
+            fontWeight="400"
+            sx={{ textAlign: 'center', whiteSpace: 'pre-wrap' }}
+          >
+            {description}
+          </Typography>
+          <Typography>Rs {price}</Typography>
         </Box>
       </Box>
     </Box>
   );
 };
 
-EventCard.propTypes = {
-  eventItem: PropTypes.object.isRequired
-}
+PackageCard.propTypes = {
+  price: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+};
 
-export default EventCard;
+export default PackageCard;

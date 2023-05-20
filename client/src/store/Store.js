@@ -11,12 +11,12 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['appReducer', 'authReducer'],
-  blacklist: [],
+  whitelist: ['AdminReducer'],
+  blacklist: ['AdminReducer'],
   debug: process.env.REACT_APP_ENV !== 'Production',
   transforms: [
-    createBlacklistFilter('appReducer'),
-    createBlacklistFilter('authReducer'),
+    // createWhitelistFilter('AdminReducer', ['packages']),
+    createBlacklistFilter('AdminReducer', ['packages']),
   ],
 };
 
