@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Breadcrumb from '../components/Breadcrumb';
+import Breadcrumb from '../../../components/Breadcrumb';
 import EventCard from '../components/EventCard';
 
 const EventView = () => {

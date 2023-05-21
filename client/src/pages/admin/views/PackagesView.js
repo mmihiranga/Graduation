@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import Breadcrumb from '../components/Breadcrumb';
+import Breadcrumb from '../../../components/Breadcrumb';
 import PackageCard from '../components/PackageCard';
 import AddPackageCard from '../components/AddPackageCard';
 

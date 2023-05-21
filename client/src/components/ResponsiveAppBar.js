@@ -13,10 +13,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 import { PAGES, MENU_ITEMS } from '../constants';
 import { Colors } from '../values/colors';
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({isChangeColor}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -57,7 +58,7 @@ function ResponsiveAppBar() {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: isScrolled ? Colors.black : 'transparent',
+        backgroundColor: isChangeColor ? isScrolled ? Colors.black : 'transparent' : Colors.black,
         boxShadow: isScrolled ? '0 0 10px rgba(0,0,0,0.5)' : 'none',
         transition: 'background-color 0.3s ease-in-out',
       }}
@@ -194,4 +195,8 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
+
+ResponsiveAppBar.propTypes = {
+  isChangeColor: PropTypes.bool,
+};
 export default ResponsiveAppBar;

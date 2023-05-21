@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Colors } from '../../../values/colors';
+import { Colors } from '../values/colors';
 
 const Breadcrumb = ({ title, breadcrumb }) => {
   const parts = breadcrumb.split('/');
