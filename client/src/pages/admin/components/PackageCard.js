@@ -192,7 +192,7 @@ const PackageCard = ({ price, title, description }) => {
           >
             {description}
           </Typography>
-          <Typography>Rs {price}</Typography>
+          <Typography>$ {price}</Typography>
         </Box>
       </Box>
     </Box>

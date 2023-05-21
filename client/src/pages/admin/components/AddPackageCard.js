@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { MdDone } from 'react-icons/md';
 import { CiImageOn } from 'react-icons/ci';
@@ -23,49 +23,52 @@ const AddPackageCard = () => {
     isPackageImage,
   } = useSelector((state) => state.AdminReducer);
 
-  const hasErrors = async () => {
+  const hasErrors = useMemo(() => {
+    return (
+      !isPackageTitle ||
+      !isPackageDescription ||
+      !isPackagePrice ||
+      !isPackageImage
+    );
+  }, [isPackageTitle, isPackageDescription, isPackagePrice, isPackageImage]);
+
+  const handleValidations = async () => {
+    const validationPromises = [];
+
     if (!packageTitle.trim()) {
-      await dispatch(
-        AdminActions.setPackageValidation(false, 'TITLE')
+      validationPromises.push(
+        dispatch(AdminActions.setPackageValidation(false, 'TITLE'))
       );
     }
 
     if (!packageDescription.trim()) {
-      await dispatch(
-        AdminActions.setPackageValidation(false, 'DESCRIPTION')
+      validationPromises.push(
+        dispatch(AdminActions.setPackageValidation(false, 'DESCRIPTION'))
       );
     }
 
     if (!packagePrice.trim()) {
-      await dispatch(
-        AdminActions.setPackageValidation(false, 'PRICE')
+      validationPromises.push(
+        dispatch(AdminActions.setPackageValidation(false, 'PRICE'))
       );
     }
 
     if (!packageImage) {
-      await dispatch(
-        AdminActions.setPackageValidation(false, 'IMAGE')
+      validationPromises.push(
+        dispatch(AdminActions.setPackageValidation(false, 'IMAGE'))
       );
     }
 
-    
-
-    return (
-      isPackageTitle ||
-      isPackageDescription ||
-      isPackagePrice ||
-      isPackageImage
-    );
+    await Promise.all(validationPromises);
   };
 
-  const handleClickSave = () => {
-    // console.log(hasErrors)
-    setLoading(true);
-
-    if (!hasErrors()) {
-      setLoading(false);
+  // Usage example
+  const handleFormSubmit = async () => {
+    handleValidations();
+    if (hasErrors) {
+      // Handle form errors
     } else {
-      setLoading(false);
+      // Proceed with form submission
     }
   };
 
@@ -173,9 +176,7 @@ const AddPackageCard = () => {
               dispatch(AdminActions.setPackageTitle(e.target.value))
             }
             error={!isPackageTitle}
-            helperText={
-              !isPackageTitle && 'This field is required'
-            }
+            helperText={!isPackageTitle && 'This field is required'}
           />
           <CustomTextField
             fullWidth
@@ -187,9 +188,7 @@ const AddPackageCard = () => {
               dispatch(AdminActions.setPackagePrice(e.target.value))
             }
             error={!isPackagePrice}
-            helperText={
-              !isPackagePrice && 'This field is required'
-            }
+            helperText={!isPackagePrice && 'This field is required'}
           />
           <CustomTextField
             fullWidth
@@ -203,10 +202,7 @@ const AddPackageCard = () => {
               dispatch(AdminActions.setPackageDescription(e.target.value))
             }
             error={!isPackageDescription}
-            helperText={
-              !isPackageDescription &&
-              'This field is required'
-            }
+            helperText={!isPackageDescription && 'This field is required'}
           />
         </Box>
       </Box>
@@ -219,13 +215,19 @@ const AddPackageCard = () => {
           py: 2,
         }}
       >
-        <Typography>Enter details to create package</Typography>
+        <Typography
+          sx={{
+            color: hasErrors ? Colors.error : Colors.black,
+          }}
+        >
+          Enter details to create package
+        </Typography>
         <LoadingButton
           size="small"
-          onClick={handleClickSave}
+          onClick={handleFormSubmit}
           loading={loading}
           variant="contained"
-          disabled={loading}
+          disabled={loading || hasErrors}
           startIcon={<MdDone color={Colors.white} />}
           sx={{
             width: '20%',
