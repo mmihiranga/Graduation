@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Breadcrumb from '../../../components/Breadcrumb';
 import PackageCard from '../components/PackageCard';
 import AddPackageCard from '../components/AddPackageCard';
+import * as PackagesActions from '../../../store/actions/PackageActions';
 
 const PackagesView = () => {
-  const { packages } = useSelector((state) => state.AdminReducer);
+  const dispatch = useDispatch();
+  const { packages } = useSelector((state) => state.PackageReducer);
+
+  useEffect(() => {
+    dispatch(PackagesActions.getPackages());
+  }, []);
 
   return (
     <Box>

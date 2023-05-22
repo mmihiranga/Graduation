@@ -5,7 +5,7 @@ import Breadcrumb from '../../../components/Breadcrumb';
 import EventCard from '../components/EventCard';
 
 const EventView = () => {
-  const { events } = useSelector((state) => state.AdminReducer);
+  const { events } = useSelector((state) => state.PackageReducer);
 
   const currentDate = new Date(); // Get the current date
 

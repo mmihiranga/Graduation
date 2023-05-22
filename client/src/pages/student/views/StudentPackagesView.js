@@ -11,9 +11,10 @@ import CartPopup from '../components/CartPopup';
 
 const StudentPackagesView = () => {
   const dispatch = useDispatch();
-  const { packages } = useSelector((state) => state.AdminReducer);
+  const { packages } = useSelector((state) => state.PackageReducer);
   const [checkedItems, setCheckedItems] = useState([]);
   const loading = false;
+  
 
   const handleCheckboxChange = (checkedItem, isChecked) => {
     if (isChecked) {

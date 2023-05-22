@@ -24,6 +24,7 @@ import {
 } from 'react-icons/io5';
 import Breadcrumb from '../../../components/Breadcrumb';
 import { Colors } from '../../../values/colors';
+import ImageUploader from '../../../components/ImageUploader';
 
 const StudentProfileView = () => {
   const [avatarImage, setAvatarImage] = useState(null);
@@ -186,13 +187,22 @@ const StudentProfileView = () => {
       >
         <Box
           sx={{
-            width: 200,
-            height: 200,
-            borderRadius: 4,
-            backgroundColor: Colors.green,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 1,
           }}
         >
-          image
+          <Box
+            sx={{
+              width: 200,
+              height: 200,
+              borderRadius: 4,
+              backgroundColor: Colors.green,
+            }}
+          />
+          <ImageUploader />
         </Box>
         <Box
           sx={{
@@ -260,7 +270,7 @@ const StudentProfileView = () => {
                 gap: 1,
               }}
             >
-               <TextField
+              <TextField
                 label="Student Name"
                 variant="outlined"
                 value={fullName}
