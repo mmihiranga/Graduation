@@ -1,4 +1,4 @@
-import  Api  from '../../Api';
+import Api from '../../Api';
 import * as PackageTypes from '../types/PackageTypes';
 
 export const setPackages = (payload) => ({
@@ -43,11 +43,11 @@ export const createPackage = () => {
         title: packageTitle,
         description: packageDescription,
         price: packagePrice,
-        image: packageImage,
+        image: 'packageImage',
       };
 
       console.log(body);
-      await Api.post('package/', { body });
+      await Api.post('package', body);
       dispatch(clearPackageDetails());
       dispatch(getPackages());
     } catch (error) {
