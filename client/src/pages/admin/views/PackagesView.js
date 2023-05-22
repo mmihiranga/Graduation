@@ -36,7 +36,7 @@ const PackagesView = () => {
 
       <Box
         sx={{
-          my: 3,
+          my: 5,
           ml: 10,
         }}
       >
@@ -50,6 +50,7 @@ const PackagesView = () => {
             gap: 5,
             flexWrap: 'wrap',
             justifyContent: 'flex-start',
+            mt:4,
           }}
         >
           {packages?.map((item) => (
@@ -58,6 +59,7 @@ const PackagesView = () => {
               title={item.title}
               description={item.description}
               price={item.price}
+              image={item.image}
             />
           ))}
         </Box>

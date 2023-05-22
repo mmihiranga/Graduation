@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     image: { type: String, required: false },
     password: { type: String, required: true },
     userType: { type: String, enum: ["admin", "teacher", "student"], required: true },
-    package: { type: mongoose.Schema.Types.ObjectId, ref: "Package" },
+    // package: { type: mongoose.Schema.Types.ObjectId, ref: "Package" },
   },
   {
     timestamps: true,

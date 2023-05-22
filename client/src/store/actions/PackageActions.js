@@ -43,10 +43,8 @@ export const createPackage = () => {
         title: packageTitle,
         description: packageDescription,
         price: packagePrice,
-        image: 'packageImage',
+        image: packageImage,
       };
-
-      console.log(body);
       await Api.post('package', body);
       dispatch(clearPackageDetails());
       dispatch(getPackages());

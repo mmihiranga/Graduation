@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -8,13 +8,17 @@ import PackageCard from '../../admin/components/PackageCard';
 import { Colors } from '../../../values/colors';
 import * as CartActions from '../../../store/actions/CartActions';
 import CartPopup from '../components/CartPopup';
+import * as PackageActions from '../../../store/actions/PackageActions';
 
 const StudentPackagesView = () => {
   const dispatch = useDispatch();
   const { packages } = useSelector((state) => state.PackageReducer);
   const [checkedItems, setCheckedItems] = useState([]);
   const loading = false;
-  
+
+  useEffect(() => {
+    dispatch(PackageActions.getPackages());
+  }, []);
 
   const handleCheckboxChange = (checkedItem, isChecked) => {
     if (isChecked) {
@@ -55,7 +59,11 @@ const StudentPackagesView = () => {
             loading={loading}
             variant="contained"
             disabled={loading || checkedItems.length <= 0}
-            endIcon={<BsCart color={checkedItems.length <= 0 ? 'disable' :Colors.white} />}
+            endIcon={
+              <BsCart
+                color={checkedItems.length <= 0 ? 'disable' : Colors.white}
+              />
+            }
             sx={{
               width: '15%',
               height: '40px',
@@ -87,6 +95,7 @@ const StudentPackagesView = () => {
               title={item.title}
               description={item.description}
               price={item.price}
+              image={item.image}
               loading={false}
               onCheckboxChange={(isChecked) =>
                 handleCheckboxChange(item, isChecked)
@@ -95,7 +104,7 @@ const StudentPackagesView = () => {
           ))}
         </Box>
       </Box>
-      <CartPopup/>
+      <CartPopup />
     </Box>
   );
 };
