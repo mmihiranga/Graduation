@@ -14,7 +14,6 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import CallIcon from "@mui/icons-material/Call";
 import HomeIcon from "@mui/icons-material/Home";
-import Navbar from "../../components/ResponsiveAppBar";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -28,8 +27,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import SchoolIcon from '@mui/icons-material/School';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import Navbar from "../../components/ResponsiveAppBar";
 // import API from './../api'
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
@@ -281,7 +281,6 @@ const RegisterMother = () => {
 
   return (
     <MainContainer>
-      <Navbar isLogin={true}/>
       <Container>
         <Snackbar
           open={openSnackbar}
