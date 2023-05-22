@@ -8,15 +8,23 @@ import Login from './pages/auth/Login';
 import Footer from './components/Footer';
 import PersistentDrawer from './pages/admin/PersistentDrawer';
 import RegisterUniversity from './pages/auth/RegisterUniversity';
+import StudentPortal from './pages/student/StudentPortal';
 
 function App() {
   const location = useLocation();
-  const isShowHeader = location.pathname === '/login' || location.pathname === '/admin'; // Adjust the path if needed
+  const isShowHeader =
+    location.pathname === '/login' || location.pathname === '/admin'; // Adjust the path if needed
+  const isShowFooter = location.pathname === '/admin';
+
+  const isChangeHeaderColor =
+    !!(location.pathname === '/' || location.pathname ==='/home'); 
 
   return (
     <Box>
-      {!isShowHeader && <ResponsiveAppBar />}
-      {/* Render the HeaderBar component only when not on the login page */}
+      {!isShowHeader && (
+        <ResponsiveAppBar isChangeColor={isChangeHeaderColor} />
+      )}
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -52,8 +60,18 @@ function App() {
             </Suspense>
           }
         />
+
+        <Route
+          path="/student"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <StudentPortal />
+            </Suspense>
+          }
+        />
       </Routes>
-      {!isShowHeader && <Footer />}
+
+      {!isShowFooter && <Footer />}
     </Box>
   );
 }

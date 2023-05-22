@@ -9,7 +9,7 @@ const theme = createTheme({
       default: Colors.greyLight,
     },
     primary: {
-      main: Colors.primary,
+      main: Colors.black,
       light: Colors.primaryLight,
       dark: Colors.primaryDark,
       contrastText: Colors.primaryText,

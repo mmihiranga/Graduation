@@ -5,7 +5,7 @@ import { Colors } from '../values/colors';
 const CustomTextField = styled(TextField)(() => ({
   '& .MuiOutlinedInput-root': {
     '&:hover fieldset': {
-      borderColor: Colors.green, // Change hover border color
+      borderColor: Colors.yellow, // Change hover border color
     },
     '&.Mui-focused fieldset': {
       borderColor: Colors.yellow, // Change focus border color

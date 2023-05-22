@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 import { PAGES, MENU_ITEMS } from '../constants';
 import { Colors } from '../values/colors';
 
@@ -257,4 +258,8 @@ function ResponsiveAppBar({isLogin = null}) {
     </AppBar>
   );
 }
+
+ResponsiveAppBar.propTypes = {
+  isChangeColor: PropTypes.bool,
+};
 export default ResponsiveAppBar;

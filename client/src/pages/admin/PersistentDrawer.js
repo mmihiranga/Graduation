@@ -30,6 +30,7 @@ const drawerWidth = 240;
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     flexGrow: 1,
+    backgroundColor: Colors.white,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
@@ -75,7 +76,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const PersistentDrawer = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [selectedView, setSelectedView] = useState('Dashboard');
+  const [selectedView, setSelectedView] = useState('Event');
   const [hoverText, setHoverText] = useState('Dashboard');
 
   const handleDrawerOpen = () => {
