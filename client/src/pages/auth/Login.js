@@ -19,7 +19,7 @@ import Navbar from "../../components/ResponsiveAppBar";
 // import { useSelector, useDispatch } from 'react-redux';
 // import { login, userInfo } from '../redux/user';
 
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
@@ -247,7 +247,6 @@ const Login = () => {
 
   return (
     <MainContainer>
-      <Navbar isLogin={true}/>
       <Container>
         <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
           <Alert onClose={handleCloseSnackbar} severity={snackbarType} sx={{ width: '100%' }}>
