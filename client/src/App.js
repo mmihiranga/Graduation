@@ -7,6 +7,7 @@ import ResponsiveAppBar from './components/ResponsiveAppBar';
 import Login from './pages/auth/Login';
 import Footer from './components/Footer';
 import PersistentDrawer from './pages/admin/PersistentDrawer';
+import RegisterUniversity from './pages/auth/RegisterUniversity';
 import StudentPortal from './pages/student/StudentPortal';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
       )}
       
       <Routes>
-        <Route path="/" element={<PageLoader />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/home"
           element={
@@ -39,6 +40,14 @@ function App() {
           element={
             <Suspense fallback={<PageLoader />}>
               <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/regUniversity"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <RegisterUniversity />
             </Suspense>
           }
         />
