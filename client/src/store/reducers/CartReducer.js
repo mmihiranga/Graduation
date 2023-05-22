@@ -1,16 +1,17 @@
-import {cloneDeep} from 'lodash';
+import { cloneDeep } from 'lodash';
 import * as CartTypes from '../types/CartTypes';
 
 const initialState = {
   studentCart: [],
   isLoading: false,
   isError: false,
+  isCartPopUpShow: false,
 };
 
 const CartReducer = (state = initialState, action) => {
   switch (action.type) {
     case CartTypes.CLEAR_REDUCER:
-        return cloneDeep(initialState);
+      return cloneDeep(initialState);
     case CartTypes.SET_CART:
       return {
         ...state,
@@ -25,6 +26,11 @@ const CartReducer = (state = initialState, action) => {
       return {
         ...state,
         isError: action.payload,
+      };
+    case CartTypes.SET_CART_POPUP_SHOW:
+      return {
+        ...state,
+        isCartPopUpShow: action.payload,
       };
     default:
       return state;

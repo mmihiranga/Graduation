@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { BsCart } from 'react-icons/bs';
 import Breadcrumb from '../../../components/Breadcrumb';
 import PackageCard from '../../admin/components/PackageCard';
 import { Colors } from '../../../values/colors';
+import * as CartActions from '../../../store/actions/CartActions';
+import CartPopup from '../components/CartPopup';
 
 const StudentPackagesView = () => {
+  const dispatch = useDispatch();
   const { packages } = useSelector((state) => state.AdminReducer);
   const [checkedItems, setCheckedItems] = useState([]);
   const loading = false;
@@ -23,7 +26,9 @@ const StudentPackagesView = () => {
   };
 
   const handleCheckout = () => {
-    console.log('checkout',checkedItems);
+    dispatch(CartActions.setCart(checkedItems));
+    dispatch(CartActions.setCartPopUpShow(true));
+    console.log('checkout', checkedItems);
   };
 
   return (
@@ -31,21 +36,6 @@ const StudentPackagesView = () => {
       <Breadcrumb title="Profile" breadcrumb="Home/ Student Portal/ Packages" />
 
       <Box sx={{ my: 3, mx: 3 }}>
-        {/* <Box sx={{ my: 3, mx: 3 }}>
-          <Typography>Checked Items:</Typography>
-          <List>
-            {checkedItems.map((itemId) => {
-              const selectedItem = packages.find((item) => item.id === itemId);
-              return (
-                <ListItem key={itemId}>
-                  <ListItemText primary={selectedItem.title} />
-                  <ListItemText primary={`Price: $${selectedItem.price}`} />
-                </ListItem>
-              );
-            })}
-          </List>
-          <Typography>Total Price: ${calculateTotalPrice()}</Typography>
-        </Box> */}
         <Box
           sx={{
             display: 'flex',
@@ -63,8 +53,8 @@ const StudentPackagesView = () => {
             onClick={handleCheckout}
             loading={loading}
             variant="contained"
-            disabled={loading}
-            endIcon={<BsCart color={Colors.white} />}
+            disabled={loading || checkedItems.length <= 0}
+            endIcon={<BsCart color={checkedItems.length <= 0 ? 'disable' :Colors.white} />}
             sx={{
               width: '15%',
               height: '40px',
@@ -104,6 +94,7 @@ const StudentPackagesView = () => {
           ))}
         </Box>
       </Box>
+      <CartPopup/>
     </Box>
   );
 };
