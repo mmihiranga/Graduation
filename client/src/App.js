@@ -13,7 +13,7 @@ import StudentPortal from './pages/student/StudentPortal';
 function App() {
   const location = useLocation();
   const isShowHeader =location.pathname === '/admin'; // Adjust the path if needed
-  const isShowFooter = location.pathname === '/admin';
+  const isShowFooter = location.pathname === '/admin' || location.pathname === '/login' || location.pathname === '/regUniversity';
 
   const isChangeHeaderColor =
     !!(location.pathname === '/' || location.pathname ==='/home'); 
