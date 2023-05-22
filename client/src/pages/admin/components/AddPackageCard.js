@@ -6,7 +6,7 @@ import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { Colors } from '../../../values/colors';
 import CustomTextField from '../../../components/CustomTextField';
-import * as AdminActions from '../../../store/actions/AdminActions';
+import * as PackageActions from '../../../store/actions/PackageActions';
 
 const AddPackageCard = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const AddPackageCard = () => {
     isPackageDescription,
     isPackagePrice,
     isPackageImage,
-  } = useSelector((state) => state.AdminReducer);
+  } = useSelector((state) => state.PackageReducer);
 
   const hasErrors = useMemo(() => {
     return (
@@ -37,25 +37,25 @@ const AddPackageCard = () => {
 
     if (!packageTitle.trim()) {
       validationPromises.push(
-        dispatch(AdminActions.setPackageValidation(false, 'TITLE'))
+        dispatch(PackageActions.setPackageValidation(false, 'TITLE'))
       );
     }
 
     if (!packageDescription.trim()) {
       validationPromises.push(
-        dispatch(AdminActions.setPackageValidation(false, 'DESCRIPTION'))
+        dispatch(PackageActions.setPackageValidation(false, 'DESCRIPTION'))
       );
     }
 
     if (!packagePrice.trim()) {
       validationPromises.push(
-        dispatch(AdminActions.setPackageValidation(false, 'PRICE'))
+        dispatch(PackageActions.setPackageValidation(false, 'PRICE'))
       );
     }
 
     if (!packageImage) {
       validationPromises.push(
-        dispatch(AdminActions.setPackageValidation(false, 'IMAGE'))
+        dispatch(PackageActions.setPackageValidation(false, 'IMAGE'))
       );
     }
 
@@ -65,10 +65,10 @@ const AddPackageCard = () => {
   // Usage example
   const handleFormSubmit = async () => {
     handleValidations();
-    if (hasErrors) {
-      // Handle form errors
-    } else {
-      // Proceed with form submission
+    if (!hasErrors) {
+      setLoading(true);
+      await dispatch(PackageActions.createPackage());
+      setLoading(false);
     }
   };
 
@@ -79,7 +79,7 @@ const AddPackageCard = () => {
       const reader = new FileReader();
 
       reader.onload = () => {
-        dispatch(AdminActions.setPackageImage(reader.result));
+        dispatch(PackageActions.setPackageImage(reader.result));
       };
 
       reader.readAsDataURL(file);
@@ -173,7 +173,7 @@ const AddPackageCard = () => {
             variant="outlined"
             value={packageTitle}
             onChange={(e) =>
-              dispatch(AdminActions.setPackageTitle(e.target.value))
+              dispatch(PackageActions.setPackageTitle(e.target.value))
             }
             error={!isPackageTitle}
             helperText={!isPackageTitle && 'This field is required'}
@@ -185,7 +185,7 @@ const AddPackageCard = () => {
             variant="outlined"
             value={packagePrice}
             onChange={(e) =>
-              dispatch(AdminActions.setPackagePrice(e.target.value))
+              dispatch(PackageActions.setPackagePrice(e.target.value))
             }
             error={!isPackagePrice}
             helperText={!isPackagePrice && 'This field is required'}
@@ -199,7 +199,7 @@ const AddPackageCard = () => {
             variant="outlined"
             value={packageDescription}
             onChange={(e) =>
-              dispatch(AdminActions.setPackageDescription(e.target.value))
+              dispatch(PackageActions.setPackageDescription(e.target.value))
             }
             error={!isPackageDescription}
             helperText={!isPackageDescription && 'This field is required'}

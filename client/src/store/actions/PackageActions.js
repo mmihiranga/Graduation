@@ -1,16 +1,58 @@
-import * as AdminTypes from '../types/AdminTypes';
+import Api from '../../Api';
+import * as PackageTypes from '../types/PackageTypes';
 
 export const setPackages = (payload) => ({
-  type: AdminTypes.SET_PACKAGE,
+  type: PackageTypes.SET_PACKAGE,
   payload,
 });
 
+export const clearPackageDetails = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: PackageTypes.CLEAR_PACKAGE_DETAILS,
+    });
+  };
+};
+
 export const deletePackage = (id) => {
   return (dispatch, getState) => {
-    const { adminReducer } = getState();
-    const { packages } = adminReducer;
+    const { packages } = getState().PackageReducer;
     const newPackages = packages.filter((item) => item.id !== id);
     dispatch(setPackages(newPackages));
+  };
+};
+
+export const getPackages = () => {
+  return async (dispatch) => {
+    try {
+      const response = await Api.get('package/');
+      dispatch(setPackages(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const createPackage = () => {
+  return async (dispatch, getState) => {
+    try {
+      const { packageTitle, packageDescription, packagePrice, packageImage } =
+        getState().PackageReducer;
+
+      const body = {
+        title: packageTitle,
+        description: packageDescription,
+        price: packagePrice,
+        image: 'packageImage',
+      };
+
+      console.log(body);
+      await Api.post('package', body);
+      dispatch(clearPackageDetails());
+      dispatch(getPackages());
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
@@ -19,28 +61,28 @@ export const setPackageValidation = (value, type) => {
     switch (type) {
       case 'TITLE':
         dispatch({
-          type: AdminTypes.SET_TITLE_VALIDATION,
+          type: PackageTypes.SET_TITLE_VALIDATION,
           payload: value,
         });
         break;
 
       case 'DESCRIPTION':
         dispatch({
-          type: AdminTypes.SET_DESCRIPTION_VALIDATION,
+          type: PackageTypes.SET_DESCRIPTION_VALIDATION,
           payload: value,
         });
         break;
 
       case 'PRICE':
         dispatch({
-          type: AdminTypes.SET_PRICE_VALIDATION,
+          type: PackageTypes.SET_PRICE_VALIDATION,
           payload: value,
         });
         break;
 
       case 'IMAGE':
         dispatch({
-          type: AdminTypes.SET_IMAGE_VALIDATION,
+          type: PackageTypes.SET_IMAGE_VALIDATION,
           payload: value,
         });
         break;
@@ -54,7 +96,7 @@ export const setPackageValidation = (value, type) => {
 export const setPackageTitle = (payload) => {
   return async (dispatch) => {
     dispatch({
-      type: AdminTypes.SET_PACKAGE_TITLE,
+      type: PackageTypes.SET_PACKAGE_TITLE,
       payload: payload,
     });
     dispatch(setPackageValidation(true, 'TITLE'));
@@ -64,7 +106,7 @@ export const setPackageTitle = (payload) => {
 export const setPackageDescription = (payload) => {
   return async (dispatch) => {
     dispatch({
-      type: AdminTypes.SET_PACKAGE_DESCRIPTION,
+      type: PackageTypes.SET_PACKAGE_DESCRIPTION,
       payload: payload,
     });
     dispatch(setPackageValidation(true, 'DESCRIPTION'));
@@ -74,7 +116,7 @@ export const setPackageDescription = (payload) => {
 export const setPackagePrice = (payload) => {
   return async (dispatch) => {
     dispatch({
-      type: AdminTypes.SET_PACKAGE_PRICE,
+      type: PackageTypes.SET_PACKAGE_PRICE,
       payload: payload,
     });
     dispatch(setPackageValidation(true, 'PRICE'));
@@ -83,7 +125,7 @@ export const setPackagePrice = (payload) => {
 export const setPackageImage = (payload) => {
   return async (dispatch) => {
     dispatch({
-      type: AdminTypes.SET_PACKAGE_IMAGE,
+      type: PackageTypes.SET_PACKAGE_IMAGE,
       payload: payload,
     });
     dispatch(setPackageValidation(true, 'IMAGE'));
