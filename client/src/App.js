@@ -7,6 +7,7 @@ import ResponsiveAppBar from './components/ResponsiveAppBar';
 import Login from './pages/auth/Login';
 import Footer from './components/Footer';
 import PersistentDrawer from './pages/admin/PersistentDrawer';
+import RegisterUniversity from './pages/auth/RegisterUniversity';
 
 function App() {
   const location = useLocation();
@@ -17,7 +18,7 @@ function App() {
       {!isShowHeader && <ResponsiveAppBar />}
       {/* Render the HeaderBar component only when not on the login page */}
       <Routes>
-        <Route path="/" element={<PageLoader />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/home"
           element={
@@ -34,6 +35,14 @@ function App() {
             </Suspense>
           }
         />
+        <Route
+          path="/regUniversity"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <RegisterUniversity />
+            </Suspense>
+          }
+        />
 
         <Route
           path="/admin"
@@ -44,7 +53,7 @@ function App() {
           }
         />
       </Routes>
-      <Footer />
+      {!isShowHeader && <Footer />}
     </Box>
   );
 }
