@@ -40,6 +40,8 @@ export const Colors = {
 
   red: '#C20000',
   redLight: '#EF5350',
+  cancelRed:'#ea3a36',
+  approveGreen:'#219247',
   green: '#208158',
   greenShade: '#2AA772',
   greenLight: '#e8faf3',
