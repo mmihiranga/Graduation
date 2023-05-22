@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const connectDB = require("./src/configurations/Database");
 
 const userRouter = require("./src/apis/UserAPI");
+const packageRouter = require("./src/apis/PackageAPI");
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -21,7 +23,8 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-app.use("/api", userRouter);
+app.use("/api/user", userRouter);
+app.use("/api/package", packageRouter);
 
 // Start the server
 app.listen(port, () => {
