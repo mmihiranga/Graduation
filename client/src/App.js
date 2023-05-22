@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import PersistentDrawer from './pages/admin/PersistentDrawer';
 import RegisterUniversity from './pages/auth/RegisterUniversity';
 import StudentPortal from './pages/student/StudentPortal';
+import UniversityPortal from './pages/university/UniversityPortal';
 
 function App() {
   const location = useLocation();
@@ -65,6 +66,14 @@ function App() {
           element={
             <Suspense fallback={<PageLoader />}>
               <StudentPortal />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/university"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <UniversityPortal />
             </Suspense>
           }
         />

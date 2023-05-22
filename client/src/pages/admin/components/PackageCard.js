@@ -7,6 +7,7 @@ import { Colors } from '../../../values/colors';
 import IMAGE from '../../../assets/Images/portfolio/portfolio-2.jpg';
 
 const PackageCard = ({
+  image,
   price,
   title,
   description,
@@ -83,7 +84,7 @@ const PackageCard = ({
             borderRadius: 2,
             width: '100%',
             height: '100%',
-            backgroundImage: `url(${IMAGE})`,
+            backgroundImage: `url(${image})`,
             objectFit: 'contain',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -120,6 +121,7 @@ PackageCard.propTypes = {
   description: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
+  image: PropTypes.string.isRequired,
 };
 
 export default PackageCard;
