@@ -1,9 +1,10 @@
+import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
-import { useStripe, useElements,PaymentElement } from "@stripe/react-stripe-js";
+import { useStripe, useElements } from "@stripe/react-stripe-js";
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
+import API from "../Api";
 import { useSelector, useDispatch } from 'react-redux';
-import API from "../../";
 
 
 const CancelButton = styled.button`
@@ -78,23 +79,22 @@ export default function CheckoutForm({ handleCloseModal, isBuyer }) {
   const stripe = useStripe();
   const elements = useElements();
   let navigate = useNavigate();
-  const cartItems = useSelector((state) => state.cart.cartItems)
-  const totalAmount = useSelector((state) => state.cart.totalAmount)
+  // const cartItems = useSelector((state) => state.cart.cartItems)
+  const appointment = useSelector((state) => state.appointment)
   const userInfoDetails = JSON.parse(localStorage.getItem("userInfo"));
 
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
 
+  console.log("appointment++++++++++++", appointment)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let orderDetails = {
-      productsList: cartItems,
-      buyerId: userInfoDetails._id,
-      totalAmount: totalAmount
+    let appointmentDetails = appointment.value.data;
+    appointmentDetails = { ...appointmentDetails, userId: userInfoDetails._id }
 
-    }
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -114,17 +114,13 @@ export default function CheckoutForm({ handleCloseModal, isBuyer }) {
 
       setIsProcessing(false);
       if (res.paymentIntent.status === "succeeded") {
-        if (isBuyer) {
-          const result = await API.post('order/create', orderDetails
-          )
-          console.log("result", result)
-          setIsSuccessful(true);
-        }
-        else {
-          setIsSuccessful(true);
-        }
+
+        const result = await API.post('appointment/create', appointmentDetails)
+        console.log("result", result)
+        setIsSuccessful(true);
 
       }
+
       console.log("res", res)
 
     } catch (error) {
@@ -141,27 +137,23 @@ export default function CheckoutForm({ handleCloseModal, isBuyer }) {
   };
 
   const handleComplete = () => {
-    if(isBuyer) {
-      window.location.reload()
-      navigate("/");
-    }
-    else {
-      navigate("/adminDashboard");
-    }
+
+    navigate("/");
+    window.location.reload()
   }
   return (
-    <div>
+    <>
       {isSuccessful ?
-        <div>
+        <>
           <ImageContainer>
-            <Image src="https://i.ibb.co/jG5yKKH/Paymentsuccessful21.png" />
+            <Image src={'https://i.ibb.co/jG5yKKH/Paymentsuccessful21.png'} />
           </ImageContainer>
           <ButtonContainer>
             <DoneButton onClick={() => { handleComplete() }}>
               Done
             </DoneButton>
           </ButtonContainer>
-        <div/>
+        </>
         :
         <form id="payment-form" onSubmit={handleSubmit}>
           <PaymentElement id="payment-element" />
@@ -179,7 +171,7 @@ export default function CheckoutForm({ handleCloseModal, isBuyer }) {
           {/* Show any error or success messages */}
           {message && <div id="payment-message">{message}</div>}
         </form>}
-    </div>
+    </>
 
   );
 }

@@ -16,7 +16,7 @@ export const PAGES = [
   { label: 'Blog', path: '/blog' },
 ];
 
-export const MENU_ITEMS = [ 'Dashboard', 'Logout'];
+export const MENU_ITEMS = ['Dashboard', 'Logout'];
 
 export const SPONSOR_IMAGES = [
   client1Image,
@@ -72,79 +72,47 @@ export const SERVICES_LIST = [
   },
 ];
 
-
-
 export const GALLERY_ITEMS = [
   {
     id: 1,
-    img: "https://i.pinimg.com/564x/fa/20/c9/fa20c984e30ebf5deabfe26e0b703c04.jpg",
+    img: "https://images.unsplash.com/photo-1627556704302-624286467c65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
     title: 'Graduation 001',
     author: '@bkristastucchio',
   },
   {
     id: 2,
-    img: "https://i.pinimg.com/564x/fa/20/c9/fa20c984e30ebf5deabfe26e0b703c04.jpg",
+    img: 'https://images.unsplash.com/photo-1525921429624-479b6a26d84d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     title: 'Graduation 002',
     author: '@rollelflex_graphy726',
   },
   {
     id: 3,
-    img: "https://i.pinimg.com/564x/be/76/98/be7698807091fb7a180c79a0f99fb526.jpg",
+    img: 'https://plus.unsplash.com/premium_photo-1679162280637-997008dcaf57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     title: 'Graduation 003',
     author: '@helloimnik',
   },
   {
     id: 4,
-    img: "https://i.pinimg.com/564x/eb/25/af/eb25af8d616e6a7dfd8ae91bab35b7e2.jpg",
+    img: 'https://images.unsplash.com/photo-1621376225372-c86f16f47a09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
     title: 'Graduation 004',
     author: '@nolanissac',
   },
   {
     id: 5,
-    img: "https://i.pinimg.com/564x/75/e3/c7/75e3c7cb69f8ee80c44245a2a9fe96b4.jpg",
+    img: 'https://images.unsplash.com/photo-1633061273472-7c62356c7329?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=351&q=80',
     title: 'Graduation 005',
     author: '@hjrc33',
   },
   {
     id: 6,
-    img: "https://i.pinimg.com/564x/1a/c0/5b/1ac05bef54fd71c5f2515241aac315ae.jpg",
+    img: 'https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80',
     title: 'Graduation 006',
     author: '@arwinneil',
   },
   {
     id: 7,
-    img: "https://i.pinimg.com/564x/33/d2/bc/33d2bcba3d61b402b62d140814eff838.jpg",
+    img: 'https://images.unsplash.com/photo-1623461487986-9400110de28e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
     title: 'Graduation 007',
     author: '@tjdragotta',
-  },
-  {
-    id: 8,
-    img: "https://i.pinimg.com/564x/52/3f/ac/523fac64ee490eee751cee6eb0cfc1ea.jpg",
-    title: 'Graduation 008',
-    author: '@katie_wasserman',
-  },
-  {
-    id: 9,
-    img: "https://i.pinimg.com/564x/21/4a/34/214a34dd50cc34f5e04ae8ff3d6586b6.jpg",
-    title: 'Graduation 009',
-    author: '@silverdalex',
-  },
-  {
-    id: 10,
-    img: "https://i.pinimg.com/564x/dc/9a/64/dc9a64d9372518cedd17c17402a971e5.jpg",
-    title: 'Graduation 010',
-    author: '@shelleypauls',
-  },
-  {
-    id: 11,
-    img: "https://i.pinimg.com/564x/1a/7c/15/1a7c1506cfaeada0b63de669a66b9f4a.jpg",
-    title: 'Graduation 011',
-    author: '@peterlaster',
-  },
-  {
-    id: 12,
-    img: "https://i.pinimg.com/564x/85/68/17/856817693efad185ee741a8bb01e59ab.jpg",
-    title: 'Graduation 012',
-    author: '@southside_customs',
   },
 ];

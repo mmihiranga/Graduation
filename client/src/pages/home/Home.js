@@ -3,7 +3,6 @@ import { Box } from '@mui/material';
 import CarouselView from './views/CarouselView';
 import SponsorView from './views/SponsorView';
 import DiscoverView from './views/DiscoverView';
-import UpcomingEventView from './views/UpcomingEventView';
 import ServicesView from './views/ServicesView';
 import { Colors } from '../../values/colors';
 import ContactUsView from './views/ContactUsView';
@@ -21,7 +20,6 @@ const Home = () => {
       <SponsorView />
       <DiscoverView />
       <ServicesView />
-      <UpcomingEventView />
       <GalleryView/>
       <ContactUsView/>
     </Box>

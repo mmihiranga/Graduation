@@ -6,6 +6,7 @@ const connectDB = require("./src/configurations/Database");
 
 const userRouter = require("./src/apis/UserAPI");
 const packageRouter = require("./src/apis/PackageAPI");
+const PaymentAPI = require("./src/apis/PaymentAPI");
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/user", userRouter);
 app.use("/api/package", packageRouter);
+app.use("/payment", PaymentAPI());
 
 // Start the server
 app.listen(port, () => {
