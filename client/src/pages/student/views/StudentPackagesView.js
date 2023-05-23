@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -8,12 +8,18 @@ import PackageCard from '../../admin/components/PackageCard';
 import { Colors } from '../../../values/colors';
 import * as CartActions from '../../../store/actions/CartActions';
 import CartPopup from '../components/CartPopup';
+import * as PackageActions from '../../../store/actions/PackageActions';
+import NoDataView from '../../../components/NoDataView';
 
 const StudentPackagesView = () => {
   const dispatch = useDispatch();
-  const { packages } = useSelector((state) => state.AdminReducer);
+  const { packages } = useSelector((state) => state.PackageReducer);
   const [checkedItems, setCheckedItems] = useState([]);
   const loading = false;
+
+  useEffect(() => {
+    dispatch(PackageActions.getPackages());
+  }, []);
 
   const handleCheckboxChange = (checkedItem, isChecked) => {
     if (isChecked) {
@@ -32,7 +38,7 @@ const StudentPackagesView = () => {
   };
 
   return (
-    <Box sx={{ m: 2 }}>
+    <Box sx={{ m: 4 }}>
       <Breadcrumb title="Profile" breadcrumb="Home/ Student Portal/ Packages" />
 
       <Box sx={{ my: 3, mx: 3 }}>
@@ -54,7 +60,11 @@ const StudentPackagesView = () => {
             loading={loading}
             variant="contained"
             disabled={loading || checkedItems.length <= 0}
-            endIcon={<BsCart color={checkedItems.length <= 0 ? 'disable' :Colors.white} />}
+            endIcon={
+              <BsCart
+                color={checkedItems.length <= 0 ? 'disable' : Colors.white}
+              />
+            }
             sx={{
               width: '15%',
               height: '40px',
@@ -80,21 +90,26 @@ const StudentPackagesView = () => {
             justifyContent: 'center',
           }}
         >
-          {packages?.map((item) => (
-            <PackageCard
-              key={item.id}
-              title={item.title}
-              description={item.description}
-              price={item.price}
-              loading={false}
-              onCheckboxChange={(isChecked) =>
-                handleCheckboxChange(item, isChecked)
-              }
-            />
-          ))}
+          {packages && packages.length > 0 ? (
+            packages.map((item) => (
+              <PackageCard
+                key={item.id}
+                title={item.title}
+                description={item.description}
+                price={item.price}
+                image={item.image}
+                loading={false}
+                onCheckboxChange={(isChecked) =>
+                  handleCheckboxChange(item, isChecked)
+                }
+              />
+            ))
+          ) : (
+            <NoDataView />
+          )}
         </Box>
       </Box>
-      <CartPopup/>
+      <CartPopup />
     </Box>
   );
 };

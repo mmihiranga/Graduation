@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Breadcrumb from '../../../components/Breadcrumb';
 import PackageCard from '../components/PackageCard';
 import AddPackageCard from '../components/AddPackageCard';
+import * as PackagesActions from '../../../store/actions/PackageActions';
+import NoDataView from '../../../components/NoDataView';
 
 const PackagesView = () => {
-  const { packages } = useSelector((state) => state.AdminReducer);
+  const dispatch = useDispatch();
+  const { packages } = useSelector((state) => state.PackageReducer);
+
+  useEffect(() => {
+    dispatch(PackagesActions.getPackages());
+  }, []);
 
   return (
     <Box>
@@ -30,7 +37,7 @@ const PackagesView = () => {
 
       <Box
         sx={{
-          my: 3,
+          my: 5,
           ml: 10,
         }}
       >
@@ -43,17 +50,24 @@ const PackagesView = () => {
             display: 'flex',
             gap: 5,
             flexWrap: 'wrap',
-            justifyContent: 'flex-start',
+            justifyContent: packages.length > 0 ? 'center' : 'space-between',
+            mt: 4,
           }}
         >
-          {packages?.map((item) => (
-            <PackageCard
-              key={item.id}
-              title={item.title}
-              description={item.description}
-              price={item.price}
-            />
-          ))}
+          {packages && packages.length > 0 ? (
+            packages?.map((item) => (
+              <PackageCard
+                key={item.id}
+                title={item.title}
+                description={item.description}
+                price={item.price}
+                image={item.image}
+                isAdmin
+              />
+            ))
+          ) : (
+            <NoDataView />
+          )}
         </Box>
       </Box>
     </Box>

@@ -6,61 +6,78 @@ import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { Colors } from '../../../values/colors';
 import CustomTextField from '../../../components/CustomTextField';
-import * as PackageActions from '../../../store/actions/PackageActions';
+import * as AppActions from '../../../store/actions/AppActions';
 import ImageUploader from '../../../components/ImageUploader';
 
-const AddPackageCard = () => {
+const AddStudentCard = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const handleFileUpload = (url) => {
-    dispatch(PackageActions.setPackageImage(url));
+    dispatch(AppActions.setStudentImage(url));
   };
 
   const {
-    packageTitle,
-    packageDescription,
-    packagePrice,
-    packageImage,
-    isPackageTitle,
-    isPackageDescription,
-    isPackagePrice,
-    isPackageImage,
-  } = useSelector((state) => state.PackageReducer);
+    studentName,
+    studentEmail,
+    studentPhone,
+    studentAddress,
+    studentImage,
+    isStudentName,
+    isStudentEmail,
+    isStudentPhone,
+    isStudentAddress,
+    isStudentImage,
+  } = useSelector((state) => state.AppReducer);
+
+  
 
   const hasErrors = useMemo(() => {
     return (
-      !isPackageTitle ||
-      !isPackageDescription ||
-      !isPackagePrice ||
-      !isPackageImage
+      !isStudentName ||
+      !isStudentEmail ||
+      !isStudentPhone ||
+      !isStudentAddress ||
+      !isStudentImage
     );
-  }, [isPackageTitle, isPackageDescription, isPackagePrice, isPackageImage]);
+  }, [
+    isStudentName,
+    isStudentEmail,
+    isStudentPhone,
+    isStudentAddress,
+    isStudentImage,
+  ]);
 
   const handleValidations = async () => {
     const validationPromises = [];
 
-    if (!packageTitle.trim()) {
+    if (!studentName.trim()) {
       validationPromises.push(
-        dispatch(PackageActions.setPackageValidation(false, 'TITLE'))
+        dispatch(AppActions.setStudentValidation(false, 'NAME'))
       );
     }
 
-    if (!packageDescription.trim()) {
+    if (!studentEmail.trim()) {
       validationPromises.push(
-        dispatch(PackageActions.setPackageValidation(false, 'DESCRIPTION'))
+        dispatch(AppActions.setStudentValidation(false, 'EMAIL'))
       );
     }
 
-    if (!packagePrice.trim()) {
+    if (!studentPhone.trim()) {
       validationPromises.push(
-        dispatch(PackageActions.setPackageValidation(false, 'PRICE'))
+        dispatch(AppActions.setStudentValidation(false, 'PHONE'))
       );
     }
 
-    if (!packageImage) {
+    if (!studentAddress.trim()) {
       validationPromises.push(
-        dispatch(PackageActions.setPackageValidation(false, 'IMAGE'))
+        dispatch(AppActions.setStudentValidation(false, 'ADDRESS'))
+      );
+    }
+
+    if (!studentImage) {
+      validationPromises.push(
+        dispatch(AppActions.setStudentValidation(false, 'IMAGE'))
       );
     }
 
@@ -72,7 +89,7 @@ const AddPackageCard = () => {
     await handleValidations();
     if (!hasErrors) {
       setLoading(true);
-      await dispatch(PackageActions.createPackage());
+      await dispatch(AppActions.createStudent());
       setLoading(false);
     }
   };
@@ -82,7 +99,7 @@ const AddPackageCard = () => {
       sx={{
         my: 3,
         width: '80%',
-        height: '360px',
+        height: '480px',
         backgroundColor: Colors.white,
         borderRadius: 2,
         boxShadow: '0px 5px 90px 0px rgba(110, 123, 131, 0.29)',
@@ -108,7 +125,7 @@ const AddPackageCard = () => {
             height: '100%',
             boxSizing: 'border-box',
             backgroundColor: Colors.grey,
-            border: !isPackageImage
+            border: !isStudentImage
               ? `1px solid ${Colors.error}`
               : `1px solid ${Colors.greyDivider}`,
             borderRadius: 2,
@@ -116,7 +133,7 @@ const AddPackageCard = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundImage: packageImage ? `url(${packageImage})` : 'none',
+            backgroundImage: studentImage ? `url(${studentImage})` : 'none',
             objectFit: 'contain',
             backgroundSize: 'contain',
             backgroundPosition: 'center',
@@ -127,7 +144,7 @@ const AddPackageCard = () => {
             gap: 3,
           }}
         >
-          {!packageImage ? (
+          {!studentImage ? (
             <CiImageOn size="50" color={Colors.greyText} />
           ) : null}
           <ImageUploader onFileUpload={handleFileUpload} />
@@ -149,40 +166,52 @@ const AddPackageCard = () => {
           <CustomTextField
             fullWidth
             id="outlined-basic-title"
-            label="Package Name"
+            label="Full Name"
             variant="outlined"
-            value={packageTitle}
+            value={studentName}
             onChange={(e) =>
-              dispatch(PackageActions.setPackageTitle(e.target.value))
+              dispatch(AppActions.setStudentName(e.target.value))
             }
-            error={!isPackageTitle}
-            helperText={!isPackageTitle && 'This field is required'}
+            error={!isStudentName}
+            helperText={!isStudentName && 'This field is required'}
           />
           <CustomTextField
             fullWidth
             id="outlined-basic-price"
-            label="$ Price"
+            label="Email"
             variant="outlined"
-            value={packagePrice}
+            value={studentEmail}
             onChange={(e) =>
-              dispatch(PackageActions.setPackagePrice(e.target.value))
+              dispatch(AppActions.setStudentEmail(e.target.value))
             }
-            error={!isPackagePrice}
-            helperText={!isPackagePrice && 'This field is required'}
+            error={!isStudentEmail}
+            helperText={!isStudentEmail && 'This field is required'}
           />
           <CustomTextField
             fullWidth
             id="outlined-multiline-static"
-            label="Description"
+            label="Phone"
+            variant="outlined"
+            value={studentPhone}
+            onChange={(e) =>
+              dispatch(AppActions.setStudentPhone(e.target.value))
+            }
+            error={!isStudentPhone}
+            helperText={!isStudentPhone && 'This field is required'}
+          />
+          <CustomTextField
+            fullWidth
+            id="outlined-multiline-static"
+            label="Address"
             multiline
             rows={4}
             variant="outlined"
-            value={packageDescription}
+            value={studentAddress}
             onChange={(e) =>
-              dispatch(PackageActions.setPackageDescription(e.target.value))
+              dispatch(AppActions.setStudentAddress(e.target.value))
             }
-            error={!isPackageDescription}
-            helperText={!isPackageDescription && 'This field is required'}
+            error={!isStudentAddress}
+            helperText={!isStudentAddress && 'This field is required'}
           />
         </Box>
       </Box>
@@ -200,7 +229,7 @@ const AddPackageCard = () => {
             color: hasErrors ? Colors.error : Colors.black,
           }}
         >
-          Enter details to create package
+          Enter details to create student
         </Typography>
         <LoadingButton
           size="small"
@@ -219,11 +248,11 @@ const AddPackageCard = () => {
             },
           }}
         >
-          Save Package
+          Add Student
         </LoadingButton>
       </Box>
     </Box>
   );
 };
 
-export default AddPackageCard;
+export default AddStudentCard;

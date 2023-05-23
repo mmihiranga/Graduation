@@ -15,10 +15,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import { PAGES, MENU_ITEMS } from '../constants';
+import {MENU_ITEMS } from '../constants';
 import { Colors } from '../values/colors';
 
-function ResponsiveAppBar({isLogin = null}) {
+function ResponsiveAppBar({isChangeColor}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -66,8 +66,8 @@ function ResponsiveAppBar({isLogin = null}) {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: isLogin ? Colors.black : isScrolled ? Colors.black : 'transparent',
-        boxShadow: isLogin ? '0 0 10px rgba(0,0,0,0.5)' : isScrolled ? '0 0 10px rgba(0,0,0,0.5)' : 'none',
+        backgroundColor: isChangeColor ? isScrolled ? Colors.black : 'transparent' : Colors.black,
+        boxShadow: isScrolled ? '0 0 10px rgba(0,0,0,0.5)' : 'none',
         transition: 'background-color 0.3s ease-in-out',
       }}
     >

@@ -1,4 +1,4 @@
-import * as AdminTypes from '../types/AdminTypes';
+import * as PackageTypes from '../types/PackageTypes';
 
 const initialState = {
   packages: [
@@ -198,60 +198,67 @@ const initialState = {
   ],
 };
 
-const AdminReducer = (state = initialState, action) => {
+const PackageReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AdminTypes.SET_PACKAGE:
+    case PackageTypes.SET_PACKAGE:
       return {
         ...state,
         packages: action.payload,
       };
-    case AdminTypes.DELETE_PACKAGE:
-      return {
-        ...state,
-        packages: action.payload,
-      };
-    case AdminTypes.SET_PACKAGE_TITLE:
+    case PackageTypes.SET_PACKAGE_TITLE:
       return {
         ...state,
         packageTitle: action.payload,
       };
-    case AdminTypes.SET_PACKAGE_DESCRIPTION:
+    case PackageTypes.SET_PACKAGE_DESCRIPTION:
       return {
         ...state,
         packageDescription: action.payload,
       };
-    case AdminTypes.SET_PACKAGE_PRICE:
+    case PackageTypes.SET_PACKAGE_PRICE:
       return {
         ...state,
         packagePrice: action.payload,
       };
-    case AdminTypes.SET_PACKAGE_IMAGE:
+    case PackageTypes.SET_PACKAGE_IMAGE:
       return {
         ...state,
         packageImage: action.payload,
       };
-    case AdminTypes.SET_TITLE_VALIDATION:
+    case PackageTypes.SET_TITLE_VALIDATION:
       return {
         ...state,
         isPackageTitle: action.payload,
       };
 
-    case AdminTypes.SET_DESCRIPTION_VALIDATION:
+    case PackageTypes.SET_DESCRIPTION_VALIDATION:
       return {
         ...state,
         isPackageDescription: action.payload,
       };
-    case AdminTypes.SET_PRICE_VALIDATION:
+    case PackageTypes.SET_PRICE_VALIDATION:
       return {
         ...state,
         isPackagePrice: action.payload,
       };
-    case AdminTypes.SET_IMAGE_VALIDATION:
+    case PackageTypes.SET_IMAGE_VALIDATION:
       return {
         ...state,
         isPackageImage: action.payload,
       };
-    case AdminTypes.SET_EVENTS:
+    case PackageTypes.CLEAR_PACKAGE_DETAILS:
+      return {
+        ...state,
+        packageTitle: '',
+        packageDescription: '',
+        packagePrice: '',
+        packageImage: '',
+        isPackageTitle: true,
+        isPackageDescription: true,
+        isPackagePrice: true,
+        isPackageImage: true,
+      };
+    case PackageTypes.SET_EVENTS:
       return {
         ...state,
         events: action.payload,
@@ -262,4 +269,4 @@ const AdminReducer = (state = initialState, action) => {
   }
 };
 
-export default AdminReducer;
+export default PackageReducer;

@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { RxDotsHorizontal } from 'react-icons/rx';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { Colors } from '../../../values/colors';
 import IMAGE from '../../../assets/Images/portfolio/portfolio-2.jpg';
 
@@ -107,6 +107,19 @@ const EventCard = ({ eventItem }) => {
             alignItems: 'center',
           }}
         >
+          <Typography
+            variant="h5"
+            fontWeight="400"
+            sx={{
+              color: Colors.white,
+              backgroundColor: Colors.green,
+              px: 1,
+              py: 0.2,
+              borderRadius: 1,
+            }}
+          >
+            Approved
+          </Typography>
           {loading ? (
             <IconButton>
               <CircularProgress color="success" size={25} />
@@ -196,7 +209,7 @@ const EventCard = ({ eventItem }) => {
 };
 
 EventCard.propTypes = {
-  eventItem: PropTypes.object.isRequired
-}
+  eventItem: PropTypes.object.isRequired,
+};
 
 export default EventCard;
