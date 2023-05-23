@@ -1,5 +1,6 @@
 import Api from '../../Api';
 import * as PackageTypes from '../types/PackageTypes';
+import * as AppActions from "./AppActions";
 
 export const setPackages = (payload) => ({
   type: PackageTypes.SET_PACKAGE,
@@ -48,7 +49,21 @@ export const createPackage = () => {
       await Api.post('package', body);
       dispatch(clearPackageDetails());
       dispatch(getPackages());
+      dispatch(
+        AppActions.setOpenSnackBar(true, {
+          snackbarMessage: 'Successfully Package Created',
+          snackbarSeverity: 'success',
+          snackbarAutoHideDuration: 5000,
+        })
+      );
     } catch (error) {
+      dispatch(
+        AppActions.setOpenSnackBar(true, {
+          snackbarMessage: 'Something went wrong',
+          snackbarSeverity: 'error',
+          snackbarAutoHideDuration: 5000,
+        })
+      );
       console.log(error);
     }
   };

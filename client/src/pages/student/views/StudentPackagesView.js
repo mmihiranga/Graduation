@@ -9,6 +9,7 @@ import { Colors } from '../../../values/colors';
 import * as CartActions from '../../../store/actions/CartActions';
 import CartPopup from '../components/CartPopup';
 import * as PackageActions from '../../../store/actions/PackageActions';
+import NoDataView from '../../../components/NoDataView';
 
 const StudentPackagesView = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const StudentPackagesView = () => {
   };
 
   return (
-    <Box sx={{ m: 2 }}>
+    <Box sx={{ m: 4 }}>
       <Breadcrumb title="Profile" breadcrumb="Home/ Student Portal/ Packages" />
 
       <Box sx={{ my: 3, mx: 3 }}>
@@ -89,19 +90,23 @@ const StudentPackagesView = () => {
             justifyContent: 'center',
           }}
         >
-          {packages?.map((item) => (
-            <PackageCard
-              key={item.id}
-              title={item.title}
-              description={item.description}
-              price={item.price}
-              image={item.image}
-              loading={false}
-              onCheckboxChange={(isChecked) =>
-                handleCheckboxChange(item, isChecked)
-              }
-            />
-          ))}
+          {packages && packages.length > 0 ? (
+            packages.map((item) => (
+              <PackageCard
+                key={item.id}
+                title={item.title}
+                description={item.description}
+                price={item.price}
+                image={item.image}
+                loading={false}
+                onCheckboxChange={(isChecked) =>
+                  handleCheckboxChange(item, isChecked)
+                }
+              />
+            ))
+          ) : (
+            <NoDataView />
+          )}
         </Box>
       </Box>
       <CartPopup />
