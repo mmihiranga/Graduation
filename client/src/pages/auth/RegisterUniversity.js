@@ -22,13 +22,14 @@ import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 // import api from "../api";
 // import { useSelector, useDispatch } from 'react-redux';
-// import jwt_decode from 'jwt-decode'
+import jwt_decode from 'jwt-decode'
 // import { login, userInfo } from '../redux/user';
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SchoolIcon from '@mui/icons-material/School';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 // import API from './../api'
+import axios from 'axios'
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -177,23 +178,26 @@ const FlexBox = styled.div`
 
 const RegisterMother = () => {
   const [userDetails, setUserDetails] = useState({
-    fullName: "",
+    name: "",
     email: "",
-    userType: "mother",
+    phoneNo: "",
+    userType: "university",
     password: "",
     address: "",
-    birthDate: dayjs("2022-04-17"),
-    mobileNo: "",
-    pregnancyDate: dayjs("2022-04-17"),
+    date: dayjs("2022-04-17"),
+    time: "",
+    eventTitle: "",
+    location: "",
+    isVerified: "pending",
   });
-  
+
   const [value, setValue] = React.useState(dayjs('2022-04-17T15:30'));
   const [confirmPassword, setConfirmPassword] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarType, setSnackbarType] = useState("");
   const [snackbarMsg, setSnackbarMsg] = useState("");
-//   let navigate = useNavigate();
-//   const dispatch = useDispatch();
+    let navigate = useNavigate();
+  //   const dispatch = useDispatch();
 
   const handleOpenSnackbar = () => {
     setOpenSnackbar(true);
@@ -212,76 +216,68 @@ const RegisterMother = () => {
   };
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // console.log("userDetails:::", userDetails);
-    // if (
-    //   userDetails.fullName !== "" &&
-    //   userDetails.email !== "" &&
-    //   userDetails.password !== "" &&
-    //   confirmPassword !== "" &&
-    //   userDetails.birthDate !== "" &&
-    //   userDetails.address !== "" &&
-    //   userDetails.mobileNo !== "" &&
-    //   userDetails.pregnancyDate !== ""
-    // ) {
-    //   if (userDetails.password === confirmPassword) {
-    //     if (!isValidEmail(userDetails.email)) {
-    //       setSnackbarType("error");
-    //       setSnackbarMsg("Please enter a valid email");
-    //       handleOpenSnackbar();
-    //     } else {
-    //       try {
-    //         const res = await api.post("user/create", userDetails);
-    //         console.log("res", res);
-    //         let loginBody = {
-    //           email : userDetails.email,
-    //           password: userDetails.password
-    //         }
-    //         const result = await api.post('user/validate', loginBody)
-    //         navigate('/')
+    event.preventDefault();
+    console.log("userDetails:::", userDetails);
+    if (
+      userDetails.name !== "" &&
+      userDetails.email !== "" &&
+      userDetails.password !== "" &&
+      userDetails.date !== "" &&
+      userDetails.address !== "" &&
+      userDetails.phoneNo !== "" &&
+      userDetails.time !== "" &&
+      userDetails.location !== "" &&
+      userDetails.eventTitle !== ""
+    ) {
+      if (!isValidEmail(userDetails.email)) {
+        setSnackbarType("error");
+        setSnackbarMsg("Please enter a valid email");
+        handleOpenSnackbar();
+      } else {
+        try {
 
-    //         let decodedToken = jwt_decode(result.data.token)
-    //         localStorage.setItem('token', result.data.token)
-    //         localStorage.setItem('userInfo', JSON.stringify(result.data.userDetails))
-    //         dispatch(login({ 'fullName': decodedToken.fullName, 'email': decodedToken.email }))
-    //         dispatch(userInfo(result.data.userDetails))
-    //         setUserDetails({
-    //           fullName: "",
-    //           email: "",
-    //           userType: "mother",
-    //           password: "",
-    //           birthDate: dayjs("2022-04-17"),
-    //           mobileNo: "",
-    //           pregnancyDate: dayjs("2022-04-17"),
-    //         });
-    //         setConfirmPassword("");
+          const result = await axios.post("http://localhost:5000/api/user/create", userDetails);
+          console.log("result:::::::", result);
+          // let decodedToken = jwt_decode(result.data.token)
+          localStorage.setItem('token', result.data.token)
+          localStorage.setItem('userInfo', JSON.stringify(result.data.userDetails))
+          // dispatch(login({ 'fullName': decodedToken.fullName, 'email': decodedToken.email }))
+          // dispatch(userInfo(result.data.userDetails))
+          setUserDetails({
+            name: "",
+            email: "",
+            phoneNo: "",
+            userType: "university",
+            password: "",
+            address: "",
+            date: dayjs("2022-04-17"),
+            time: "",
+            eventTitle: "",
+            location: "",
+          });
 
-    //         setSnackbarType("success");
-    //         setSnackbarMsg("User Created Successfully");
-    //         handleOpenSnackbar();
-    //         navigate('/')
+          setSnackbarType("success");
+          setSnackbarMsg("User Created Successfully");
+          handleOpenSnackbar();
+          navigate('/')
 
-    //       } catch (error) {
-    //         setSnackbarType("error");
-    //         setSnackbarMsg(error.response.data.message);
-    //         handleOpenSnackbar();
-    //       }
-    //     }
-    //   } else {
-    //     setSnackbarType("error");
-    //     setSnackbarMsg("Passwords are not matched");
-    //     handleOpenSnackbar();
-    //   }
-    // } else {
-    //   setSnackbarType("error");
-    //   setSnackbarMsg("Please fill all the fields");
-    //   handleOpenSnackbar();
-    // }
+        } catch (error) {
+          setSnackbarType("error");
+          setSnackbarMsg(error.response.data.message);
+          handleOpenSnackbar();
+        }
+      }
+
+    } else {
+      setSnackbarType("error");
+      setSnackbarMsg("Please fill all the fields");
+      handleOpenSnackbar();
+    }
   };
 
   return (
     <MainContainer>
-      <Navbar isLogin={true}/>
+      <Navbar isLogin={true} />
       <Container>
         <Snackbar
           open={openSnackbar}
@@ -301,11 +297,11 @@ const RegisterMother = () => {
 
           <TextField
             label="University Name"
-            id="fullName"
+            id="name"
             autoComplete="off"
-            value={userDetails.fullName}
+            value={userDetails.name}
             onChange={(e) => {
-              setUserDetails({ ...userDetails, fullName: e.target.value });
+              setUserDetails({ ...userDetails, name: e.target.value });
             }}
             sx={{
               "& .MuiInputBase-root": {
@@ -366,12 +362,12 @@ const RegisterMother = () => {
 
           <TextField
             label="Phone Number"
-            id="mobileNo"
+            id="phoneNo"
             type="tel"
             autoComplete="off"
-            value={userDetails.mobileNo}
+            value={userDetails.phoneNo}
             onChange={(e) => {
-              setUserDetails({ ...userDetails, mobileNo: e.target.value });
+              setUserDetails({ ...userDetails, phoneNo: e.target.value });
             }}
             sx={{
               "& .MuiInputBase-root": {
@@ -465,13 +461,13 @@ const RegisterMother = () => {
           <SubTitle>Event Details</SubTitle>
 
 
-<TextField
+          <TextField
             label="Event Title"
-            id="fullName"
+            id="eventTitle"
             autoComplete="off"
-            value={userDetails.fullName}
+            value={userDetails.eventTitle}
             onChange={(e) => {
-              setUserDetails({ ...userDetails, fullName: e.target.value });
+              setUserDetails({ ...userDetails, eventTitle: e.target.value });
             }}
             sx={{
               "& .MuiInputBase-root": {
@@ -499,11 +495,11 @@ const RegisterMother = () => {
           />
           <TextField
             label="Location"
-            id="fullName"
+            id="location"
             autoComplete="off"
-            value={userDetails.fullName}
+            value={userDetails.location}
             onChange={(e) => {
-              setUserDetails({ ...userDetails, fullName: e.target.value });
+              setUserDetails({ ...userDetails, location: e.target.value });
             }}
             sx={{
               "& .MuiInputBase-root": {
@@ -534,9 +530,9 @@ const RegisterMother = () => {
               <DatePicker
                 label="Date"
                 onChange={(newValue) => {
-                  setUserDetails({ ...userDetails, birthDate: newValue });
+                  setUserDetails({ ...userDetails, date: newValue });
                 }}
-                value={userDetails.birthDate}
+                value={userDetails.date}
                 sx={{
                   "& .MuiInputBase-root": {
                     width: 500,
@@ -561,38 +557,38 @@ const RegisterMother = () => {
               />
             </DemoContainer>
           </LocalizationProvider>
-          
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['TimePicker', 'TimePicker']}>
-      
-        <TimePicker
-          label="Time"
-          value={value}
-          onChange={(newValue) => setValue(newValue)}
-          sx={{
-            "& .MuiInputBase-root": {
-              width: 500,
-            },
 
-            input: {
-              color: "black",
-              marginLeft: "8px",
-              borderColor: "black",
-            },
-            m: 1,
-            fieldset: { borderColor: "black" },
-            "& .MuiOutlinedInput-root.Mui-focused": {
-              "& > fieldset": {
-                borderColor: "black",
-              },
-            },
-          }}
-          InputLabelProps={{
-            style: { color: "#000", borderColor: "black" },
-          }}
-        />
-      </DemoContainer>
-    </LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['TimePicker', 'TimePicker']}>
+
+              <TimePicker
+                label="Time"
+                value={userDetails.time}
+                onChange={(newValue) => setUserDetails({ ...userDetails, time: newValue })}
+                sx={{
+                  "& .MuiInputBase-root": {
+                    width: 500,
+                  },
+
+                  input: {
+                    color: "black",
+                    marginLeft: "8px",
+                    borderColor: "black",
+                  },
+                  m: 1,
+                  fieldset: { borderColor: "black" },
+                  "& .MuiOutlinedInput-root.Mui-focused": {
+                    "& > fieldset": {
+                      borderColor: "black",
+                    },
+                  },
+                }}
+                InputLabelProps={{
+                  style: { color: "#000", borderColor: "black" },
+                }}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
 
           <ButtonContainer>
             {/* <Button onClick={(e) => handleSubmit(e)}>SIGN UP</Button> */}

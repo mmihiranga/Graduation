@@ -6,11 +6,13 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  validateUser,
 } = require("../controllers/UserController");
 
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
-router.post("/", createUser);
+router.post("/create", createUser);
+router.post("/validate", validateUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 
