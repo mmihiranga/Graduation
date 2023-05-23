@@ -1,49 +1,48 @@
-// {
-//   "env": {
-//     "browser": true,
-//     "es2021": true,
-//     "jest": true
-//   },
-//   "extends": ["airbnb", "prettier", "eslint:recommended"],
-//   "parserOptions": {
-//     "ecmaFeatures": {
-//       "jsx": true
-//     },
-//     "ecmaVersion": "latest",
-//     "sourceType": "module"
-//   },
-//   "plugins": ["react", "prettier"],
-//   "rules": {
-//     "react/jsx-filename-extension": [
-//       1,
-//       {
-//         "extensions": [".js", ".jsx"]
-//       }
-//     ],
-//     "import/no-unresolved": [
-//       "error",
-//       {
-//         "ignore": ["src"]
-//       }
-//     ],
-//     "import/no-extraneous-dependencies": "off",
-//     "no-unused-vars": "warn",
-//     "no-console": "off",
-//     "func-names": "off",
-//     "object-shorthand": "off",
-//     "react/jsx-props-no-spreading": "off",
-//     "react/function-component-definition": "off",
-//     "react/forbid-prop-types": "off",
-//     "react/destructuring-assignment": "off",
-//     "import/prefer-default-export": "off",
-//     "arrow-body-style": "off",
-//     "no-param-reassign": "off",
-//     "default-param-last": "off",
-//     "react/require-default-props": "off",
-//     "no-nested-ternary": "off",
-//     "import/no-named-as-default": "off",
-//     "jsx-a11y/anchor-is-valid": "off",
-//     "react/no-array-index-key": "off"
-//   }
-// }
-{}
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": ["airbnb", "prettier", "eslint:recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["src"]
+      }
+    ],
+    "import/no-extraneous-dependencies": "off",
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "object-shorthand": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": "off",
+    "react/forbid-prop-types": "off",
+    "react/destructuring-assignment": "off",
+    "import/prefer-default-export": "off",
+    "arrow-body-style": "off",
+    "no-param-reassign": "off",
+    "default-param-last": "off",
+    "react/require-default-props": "off",
+    "no-nested-ternary": "off",
+    "import/no-named-as-default": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "react/no-array-index-key": "off"
+  }
+}

@@ -1,6 +1,20 @@
 import * as AppTypes from '../types/AppTypes';
 import Api from '../../Api';
 
+export const setLoading = (payload) => ({
+  type: AppTypes.SET_LOADING,
+  payload,
+});
+
+export const showEditStudentPopup = (value) => {
+  return (dispatch) => {
+    dispatch({
+      type: AppTypes.SET_STUDENT_EDIT_POPUP,
+      payload: value,
+    });
+  };
+};
+
 export const setStudents = (payload) => ({
   type: AppTypes.SET_STUDENTS,
   payload,
@@ -22,6 +36,15 @@ export const deleteStudent = (id) => {
   };
 };
 
+export const editStudent = (id) => {
+  return (dispatch, getState) => {
+    dispatch(setLoading(true));
+    console.log('edit');
+    dispatch(showEditStudentPopup(false));
+    dispatch(setLoading(true));
+  };
+};
+
 export const getStudents = () => {
   return async (dispatch) => {
     try {
@@ -36,6 +59,7 @@ export const getStudents = () => {
 export const createStudent = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch(setLoading(true));
       const {
         studentName,
         studentEmail,
@@ -43,7 +67,6 @@ export const createStudent = () => {
         studentAddress,
         studentImage,
       } = getState().AppReducer;
-
 
       const body = {
         name: studentName,
@@ -58,11 +81,15 @@ export const createStudent = () => {
       await Api.post('user', body);
       dispatch(clearStudentDetails());
       dispatch(getStudents());
+      dispatch(setLoading(false));
     } catch (error) {
       console.log(error);
+      dispatch(setLoading(false));
     }
   };
 };
+
+
 
 export const setStudentValidation = (value, type) => {
   return (dispatch) => {

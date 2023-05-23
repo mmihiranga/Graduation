@@ -5,6 +5,7 @@ import Breadcrumb from '../../../components/Breadcrumb';
 import PackageCard from '../components/PackageCard';
 import AddPackageCard from '../components/AddPackageCard';
 import * as PackagesActions from '../../../store/actions/PackageActions';
+import NoDataView from '../../../components/NoDataView';
 
 const PackagesView = () => {
   const dispatch = useDispatch();
@@ -49,19 +50,24 @@ const PackagesView = () => {
             display: 'flex',
             gap: 5,
             flexWrap: 'wrap',
-            justifyContent: 'flex-start',
-            mt:4,
+            justifyContent: packages.length > 0 ? 'center' : 'space-between',
+            mt: 4,
           }}
         >
-          {packages?.map((item) => (
-            <PackageCard
-              key={item.id}
-              title={item.title}
-              description={item.description}
-              price={item.price}
-              image={item.image}
-            />
-          ))}
+          {packages && packages.length > 0 ? (
+            packages?.map((item) => (
+              <PackageCard
+                key={item.id}
+                title={item.title}
+                description={item.description}
+                price={item.price}
+                image={item.image}
+                isAdmin
+              />
+            ))
+          ) : (
+            <NoDataView />
+          )}
         </Box>
       </Box>
     </Box>

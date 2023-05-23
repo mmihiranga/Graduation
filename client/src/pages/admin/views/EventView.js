@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Breadcrumb from '../../../components/Breadcrumb';
 import EventCard from '../components/EventCard';
+import NoDataView from '../../../components/NoDataView';
 
 const EventView = () => {
   const { events } = useSelector((state) => state.PackageReducer);
@@ -26,9 +27,11 @@ const EventView = () => {
         <Typography variant="h4" fontWeight="400">
           Up Coming Event Details
         </Typography>
-        {events?.map((eventItem) => (
-          <EventCard eventItem={eventItem} />
-        ))}
+        {events && events.length > 0 ? (
+          events?.map((eventItem) => <EventCard eventItem={eventItem} />)
+        ) : (
+          <NoDataView />
+        )}
       </Box>
 
       <Box
@@ -42,9 +45,13 @@ const EventView = () => {
           Previous Event Details
         </Typography>
 
-        {previousEvents.map((eventItem) => (
-          <EventCard key={eventItem.name} eventItem={eventItem} />
-        ))}
+        {previousEvents && previousEvents.length > 0 ? (
+          previousEvents.map((eventItem) => (
+            <EventCard key={eventItem.name} eventItem={eventItem} />
+          ))
+        ) : (
+          <NoDataView />
+        )}
       </Box>
     </Box>
   );
