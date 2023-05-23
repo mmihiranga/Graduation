@@ -13,6 +13,7 @@ import AddStudentCard from './components/AddStudentCard';
 import * as AppActions from '../../store/actions/AppActions';
 import { Colors } from '../../values/colors';
 import NoDataView from '../../components/NoDataView';
+import EventCard from '../admin/components/EventCard';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -59,7 +60,7 @@ const StyledMenu = styled((props) => (
 
 const UniversityPortal = () => {
   const dispatch = useDispatch();
-  const { studentList } = useSelector((state) => state.AppReducer);
+  const { studentList, userInfo } = useSelector((state) => state.AppReducer);
   const [anchorEl, setAnchorEl] = useState(false);
 
   const handleClick = (event) => {
@@ -87,6 +88,20 @@ const UniversityPortal = () => {
         title="Event Management"
         breadcrumb="Home/ University Portal/ Event Management"
       />
+      <Box sx={{ my: 3, mx: 3 }}>
+        <Typography variant="h3" fontWeight="400">
+          Event Details
+        </Typography>
+        <EventCard
+          eventItem={{
+            eventTitle: userInfo.eventTitle,
+            address: userInfo.address,
+            date: userInfo.date,
+            location: userInfo.location,
+          }}
+          isAdmin={false}
+        />
+      </Box>
 
       <Box sx={{ my: 3, mx: 3 }}>
         <Typography variant="h3" fontWeight="400">
@@ -142,7 +157,7 @@ const UniversityPortal = () => {
                 <Typography variant="body2" fontWeight="400">
                   Phone Number
                 </Typography>
-                {student.phone ? student.phone : '-'}
+                {student.phoneNo ? student.phoneNo : '-'}
               </Typography>
               <Typography variant="h5" fontWeight="400" sx={{ flex: 3 }}>
                 <Typography variant="body2" fontWeight="400">

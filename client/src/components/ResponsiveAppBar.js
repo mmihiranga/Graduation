@@ -13,17 +13,24 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
-import {MENU_ITEMS } from '../constants';
+import { MENU_ITEMS } from '../constants';
 import { Colors } from '../values/colors';
+import { useDispatch, useSelector } from 'react-redux';
+import * as AppActions from '../store/actions/AppActions';
 
-function ResponsiveAppBar({isChangeColor}) {
+function ResponsiveAppBar({ isChangeColor }) {
+  let navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state) => state.AppReducer);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -41,7 +48,22 @@ function ResponsiveAppBar({isChangeColor}) {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (index) => {
+    if (index === 0) {
+      if (userInfo?.userType === 'admin') {
+        navigate('/admin');
+      } else if (userInfo?.userType === 'student') {
+        navigate('/student');
+      } else {
+        navigate('/university');
+      }
+    } else {
+      dispatch(AppActions.clearUserInfo());
+      localStorage.removeItem('token');
+      localStorage.removeItem('userInfo');
+      navigate('/');
+      window.location.reload();
+    }
     setAnchorElUser(null);
   };
 
@@ -66,16 +88,19 @@ function ResponsiveAppBar({isChangeColor}) {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: isChangeColor ? isScrolled ? Colors.black : 'transparent' : Colors.black,
+        backgroundColor: isChangeColor
+          ? isScrolled
+            ? Colors.black
+            : 'transparent'
+          : Colors.black,
         boxShadow: isScrolled ? '0 0 10px rgba(0,0,0,0.5)' : 'none',
         transition: 'background-color 0.3s ease-in-out',
       }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
-            variant="h6"
+            variant="h3"
             noWrap
             component="a"
             href="/"
@@ -89,7 +114,7 @@ function ResponsiveAppBar({isChangeColor}) {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            MyConvo
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -128,7 +153,6 @@ function ResponsiveAppBar({isChangeColor}) {
               </MenuItem>
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -145,7 +169,7 @@ function ResponsiveAppBar({isChangeColor}) {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            MyConvo
           </Typography>
           <Box
             sx={{
@@ -156,7 +180,7 @@ function ResponsiveAppBar({isChangeColor}) {
           >
             <Button
               component={Link}
-              to='/'
+              to="/"
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'inherit', display: 'block' }}
             >
@@ -164,7 +188,7 @@ function ResponsiveAppBar({isChangeColor}) {
             </Button>
             <Button
               component={Link}
-              to='/'
+              to="/"
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'inherit', display: 'block' }}
             >
@@ -172,7 +196,7 @@ function ResponsiveAppBar({isChangeColor}) {
             </Button>
             <Button
               component={Link}
-              to='/'
+              to="/"
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'inherit', display: 'block' }}
             >
@@ -180,43 +204,66 @@ function ResponsiveAppBar({isChangeColor}) {
             </Button>
             <Button
               component={Link}
-              to='/'
+              to="/"
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'inherit', display: 'block' }}
             >
               Photography
             </Button>
-            <div>
-              <Button
-               component={Link}
-               sx={{ my: 2, color: 'inherit' ,display:'flex'}}
-               endIcon={<KeyboardArrowDownIcon />}
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-              >
-                Portal
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-              >
-                <MenuItem onClick={handleClose}>Admin</MenuItem>
-                <MenuItem onClick={handleClose}>University</MenuItem>
-                <MenuItem onClick={handleClose}>Student</MenuItem>
-              </Menu>
-            </div>
+            {!userInfo && (
+              <div>
+                <Button
+                  component={Link}
+                  sx={{ my: 2, color: 'inherit', display: 'flex' }}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
+                >
+                  Portal
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      navigate('/adminLogin');
+                      handleClose();
+                    }}
+                  >
+                    Admin
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate('/login');
+                      handleClose();
+                    }}
+                  >
+                    University
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      navigate('/adminLogin');
+                      handleClose();
+                    }}
+                  >
+                    Student
+                  </MenuItem>
+                </Menu>
+              </div>
+            )}
 
             <Button
               component={Link}
-              to='/'
+              to="/"
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: 'inherit', display: 'block' }}
             >
@@ -224,35 +271,40 @@ function ResponsiveAppBar({isChangeColor}) {
             </Button>
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {MENU_ITEMS.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {userInfo && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={userInfo?.name} src={userInfo?.image} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {MENU_ITEMS.map((setting, index) => (
+                  <MenuItem
+                    key={setting}
+                    onClick={() => handleCloseUserMenu(index)}
+                  >
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

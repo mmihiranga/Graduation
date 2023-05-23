@@ -18,7 +18,6 @@ const ReusableSnackbar = ({
 }) => {
   const dispatch = useDispatch();
 
-  console.log(message, severity, autoHideDuration, open);
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;

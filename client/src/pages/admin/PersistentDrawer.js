@@ -24,6 +24,9 @@ import DashboardView from './views/DashboardView';
 import EventView from './views/EventView';
 import PackagesView from './views/PackagesView';
 import { Colors } from '../../values/colors';
+import * as AppActions from '../../store/actions/AppActions';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -74,6 +77,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const PersistentDrawer = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [selectedView, setSelectedView] = useState('Event');
@@ -89,6 +94,13 @@ const PersistentDrawer = () => {
 
   const handleListItemClick = (text) => {
     setSelectedView(text);
+    if (text === 'Logout') {
+      dispatch(AppActions.clearUserInfo());
+      localStorage.removeItem('token');
+      localStorage.removeItem('userInfo');
+      navigate('/');
+      window.location.reload();
+    }
   };
 
   const renderView = () => {

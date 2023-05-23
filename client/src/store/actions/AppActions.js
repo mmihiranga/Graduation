@@ -8,7 +8,6 @@ export const setLoading = (payload) => ({
 
 export const setSnackBarMessage = (payload) => {
   return async (dispatch) => {
-    console.log(payload);
     dispatch({
       type: AppTypes.SET_SNACKBAR_MESSAGE,
       payload: payload,
@@ -84,7 +83,7 @@ export const editStudent = (id) => {
 export const getStudents = () => {
   return async (dispatch) => {
     try {
-      const response = await Api.get('user/');
+      const response = await Api.get(`user/userType/student`);
       dispatch(setStudents(response.data));
     } catch (error) {
       console.log(error);
@@ -96,25 +95,44 @@ export const createStudent = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(setLoading(true));
+      function generateAlphanumericWord(length) {
+        const characters =
+          'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * characters.length);
+          result += characters[randomIndex];
+        }
+
+        return result;
+      }
+
+      const alphanumericWord = generateAlphanumericWord(10);
+      console.log(alphanumericWord);
       const {
         studentName,
         studentEmail,
         studentPhone,
         studentAddress,
         studentImage,
+        userInfo,
       } = getState().AppReducer;
 
       const body = {
         name: studentName,
         email: studentEmail,
-        phone: studentPhone,
+        phoneNo: studentPhone,
         address: studentAddress,
         image: studentImage,
         userType: 'student',
-        password: 'random.id',
+        password: alphanumericWord,
+        graduationId: userInfo._id,
       };
 
-      await Api.post('user', body);
+      console.log(body);
+
+      await Api.post('user/createStudent', body);
       dispatch(clearStudentDetails());
       dispatch(getStudents());
       dispatch(setLoading(false));
@@ -229,5 +247,69 @@ export const setStudentImage = (payload) => {
       payload: payload,
     });
     dispatch(setStudentValidation(true, 'IMAGE'));
+  };
+};
+
+export const setEvents = (type) => {
+  return async (dispatch) => {
+    try {
+      const response = await Api.get(`user/userType/${type}`);
+      dispatch({
+        type: AppTypes.SET_EVENTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateEvent = (payload) => {
+  return async (dispatch) => {
+    try {
+      console.log(payload);
+      dispatch(setLoading(true));
+      await Api.put(`user/${payload.id}`, {
+        id: payload.id,
+        isVerified: payload.type,
+      });
+      dispatch(setEvents('university'));
+      dispatch(setLoading(false));
+      dispatch(
+        setOpenSnackBar(true, {
+          snackbarMessage: 'Successfully Event Updated',
+          snackbarSeverity: 'success',
+          snackbarAutoHideDuration: 4000,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+      dispatch(setLoading(false));
+      dispatch(
+        setOpenSnackBar(true, {
+          snackbarMessage: 'Something went wrong',
+          snackbarSeverity: 'error',
+          snackbarAutoHideDuration: 5000,
+        })
+      );
+    }
+  };
+};
+
+export const setUserInfo = (payload) => {
+  return async (dispatch) => {
+    dispatch({
+      type: AppTypes.SET_USER_INFO,
+      payload: payload,
+    });
+  };
+};
+
+export const clearUserInfo = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: AppTypes.SET_USER_INFO,
+      payload: '',
+    });
   };
 };

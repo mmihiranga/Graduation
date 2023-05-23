@@ -5,13 +5,25 @@ import StudentProfileView from './views/StudentProfileView';
 import StudentPackagesView from './views/StudentPackagesView';
 import StudentGalleryView from './views/StudentGalleryView';
 import { Colors } from '../../values/colors';
+import { useDispatch } from 'react-redux';
+import * as AppActions from '../../store/actions/AppActions';
+import { useNavigate } from 'react-router-dom';
 
 const StudentPortal = () => {
+  let navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
-
+  const dispatch = useDispatch();
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
+
+  const handleLogout=()=>{
+    dispatch(AppActions.clearUserInfo());
+    localStorage.removeItem('token');
+    localStorage.removeItem('userInfo');
+    navigate('/');
+    window.location.reload();
+  }
 
   return (
     <Box
@@ -149,6 +161,7 @@ const StudentPortal = () => {
             />
           </Tabs>
           <Button
+            onClick={handleLogout}
             sx={{
               width: '100%',
               display: 'flex',

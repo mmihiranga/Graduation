@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true },
     userType: { type: String,  required: true },
     isVerified: { type: String, required: false },
+    graduationId: { type: String, required: false },
 
 
     eventTitle: { type: String, required: false },

@@ -16,7 +16,7 @@ export const PAGES = [
   { label: 'Blog', path: '/blog' },
 ];
 
-export const MENU_ITEMS = ['Profile', 'Account', 'Dashboard', 'Logout'];
+export const MENU_ITEMS = [ 'Dashboard', 'Logout'];
 
 export const SPONSOR_IMAGES = [
   client1Image,
