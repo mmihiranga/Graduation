@@ -14,6 +14,13 @@ const initialState = {
   studentList: [],
   isLoading: false,
   isStudentEditPopUpShow: false,
+
+  isSnackbarOpen: false,
+  snackbarBody: {
+    snackbarMessage: '',
+    snackbarSeverity: 'success',
+    snackbarAutoHideDuration: 5000,
+  },
 };
 
 const AppReducer = (state = initialState, action) => {
@@ -83,6 +90,17 @@ const AppReducer = (state = initialState, action) => {
       return {
         ...state,
         isStudentEditPopUpShow: action.payload,
+      };
+    case AppTypes.SET_OPEN_SNACKBAR:
+      return {
+        ...state,
+        isSnackbarOpen: action.payload,
+      };
+
+    case AppTypes.SET_SNACKBAR_MESSAGE:
+      return {
+        ...state,
+        snackbarBody: action.payload,
       };
 
     case AppTypes.CLEAR_STUDENT_DETAILS:

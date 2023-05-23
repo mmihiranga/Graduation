@@ -6,6 +6,42 @@ export const setLoading = (payload) => ({
   payload,
 });
 
+export const setSnackBarMessage = (payload) => {
+  return async (dispatch) => {
+    console.log(payload);
+    dispatch({
+      type: AppTypes.SET_SNACKBAR_MESSAGE,
+      payload: payload,
+    });
+  };
+};
+
+export const setOpenSnackBar = (value, body) => {
+  return async (dispatch) => {
+    dispatch({
+      type: AppTypes.SET_OPEN_SNACKBAR,
+      payload: value,
+    });
+    dispatch(setSnackBarMessage(body));
+  };
+};
+
+export const hideSnackBar = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: AppTypes.SET_OPEN_SNACKBAR,
+      payload: false,
+    });
+    dispatch(
+      setSnackBarMessage({
+        snackbarMessage: '',
+        snackbarSeverity: '',
+        snackbarAutoHideDuration: 0,
+      })
+    );
+  };
+};
+
 export const showEditStudentPopup = (value) => {
   return (dispatch) => {
     dispatch({
@@ -82,14 +118,26 @@ export const createStudent = () => {
       dispatch(clearStudentDetails());
       dispatch(getStudents());
       dispatch(setLoading(false));
+      dispatch(
+        setOpenSnackBar(true, {
+          snackbarMessage: 'Successfully Student Created',
+          snackbarSeverity: 'success',
+          snackbarAutoHideDuration: 4000,
+        })
+      );
     } catch (error) {
       console.log(error);
       dispatch(setLoading(false));
+      dispatch(
+        setOpenSnackBar(true, {
+          snackbarMessage: 'Something went wrong',
+          snackbarSeverity: 'error',
+          snackbarAutoHideDuration: 5000,
+        })
+      );
     }
   };
 };
-
-
 
 export const setStudentValidation = (value, type) => {
   return (dispatch) => {

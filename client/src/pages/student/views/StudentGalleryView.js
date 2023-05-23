@@ -4,12 +4,15 @@ import { AiOutlineSave } from 'react-icons/ai';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import JSZip from 'jszip';
 import { LoadingButton } from '@mui/lab';
+import { useDispatch } from 'react-redux';
 import Breadcrumb from '../../../components/Breadcrumb';
 import { GALLERY_ITEMS } from '../../../constants';
 import { Colors } from '../../../values/colors';
 import NoDataView from '../../../components/NoDataView';
+import * as AppActions from '../../../store/actions/AppActions';
 
 const StudentGalleryView = () => {
+  const dispatch = useDispatch();
   const [selectedImages, setSelectedImages] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -51,11 +54,25 @@ const StudentGalleryView = () => {
           anchor.click();
           document.body.removeChild(anchor);
           setIsUploading(false);
+          dispatch(
+            AppActions.setOpenSnackBar(true, {
+              snackbarMessage: 'Successfully Downloaded',
+              snackbarSeverity: 'success',
+              snackbarAutoHideDuration: 5000,
+            })
+          );
         });
       })
 
       .catch((error) => {
         setIsUploading(false);
+        dispatch(
+          AppActions.setOpenSnackBar(true, {
+            snackbarMessage: 'Something went wrong generating zip',
+            snackbarSeverity: 'error',
+            snackbarAutoHideDuration: 5000,
+          })
+        );
         console.error('Error generating zip:', error);
       });
   };
