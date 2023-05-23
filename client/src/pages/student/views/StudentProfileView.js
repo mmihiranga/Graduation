@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Box, Typography, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { CiImageOn } from 'react-icons/ci';
@@ -13,10 +13,11 @@ import { Colors } from '../../../values/colors';
 import ImageUploader from '../../../components/ImageUploader';
 import * as AppActions from '../../../store/actions/AppActions';
 import StudentEditPopup from '../components/StudentEditPopup';
+import EventCard from '../../admin/components/EventCard';
 
 const StudentProfileView = () => {
   const dispatch = useDispatch();
-  const { studentImage, isStudentImage } = useSelector(
+  const { studentImage, isStudentImage, userInfo, events } = useSelector(
     (state) => state.AppReducer
   );
 
@@ -26,6 +27,18 @@ const StudentProfileView = () => {
   const handleEditMode = async () => {
     await dispatch(AppActions.showEditStudentPopup(true));
   };
+
+  useEffect(() => {
+    dispatch(AppActions.setEvents('university'));
+  }, []);
+
+  const currentEvent = useMemo(
+    () =>
+      events?.filter((eventItem) => eventItem._id === userInfo?.graduationId)[0],
+    [events]
+  );
+
+  console.log(currentEvent);
 
   return (
     <Box sx={{ m: 4 }}>
@@ -54,7 +67,9 @@ const StudentProfileView = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundImage: studentImage ? `url(${studentImage})` : 'none',
+            backgroundImage: studentImage
+              ? `url(${studentImage})`
+              : userInfo?.image,
             objectFit: 'contain',
             backgroundSize: 'contain',
             backgroundPosition: 'center',
@@ -79,7 +94,7 @@ const StudentProfileView = () => {
           }}
         >
           <Box>
-            <Typography variant="h2"> Madhura Mihiranga</Typography>
+            <Typography variant="h2"> {userInfo?.name}</Typography>
             <Typography
               sx={{
                 color: Colors.secondaryLight,
@@ -99,7 +114,7 @@ const StudentProfileView = () => {
               }}
             >
               <IoMailOutline />
-              madhura@gmail.com
+              {userInfo?.email}
             </Typography>
             <Typography
               sx={{
@@ -110,7 +125,7 @@ const StudentProfileView = () => {
                 fontSize: 16,
               }}
             >
-              <IoCallOutline /> 0776426210
+              <IoCallOutline /> {userInfo?.phoneNo}
             </Typography>
             <Typography
               sx={{
@@ -122,7 +137,7 @@ const StudentProfileView = () => {
               }}
             >
               <IoLocationOutline />
-              Matara
+              {userInfo?.address}
             </Typography>
           </Box>
         </Box>
@@ -157,6 +172,24 @@ const StudentProfileView = () => {
           </LoadingButton>
         </Box>
       </Box>
+      {currentEvent && (
+        <Box>
+          <Box sx={{ my: 3, mx: 3 }}>
+            <Typography variant="h3" fontWeight="400">
+              Event Details
+            </Typography>
+          </Box>
+          <EventCard
+            eventItem={{
+              eventTitle: currentEvent?.eventTitle,
+              address: currentEvent?.address,
+              date: currentEvent?.date,
+              location: currentEvent?.location,
+            }}
+            isAdmin={false}
+          />
+        </Box>
+      )}
       <StudentEditPopup />
     </Box>
   );

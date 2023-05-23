@@ -1,14 +1,21 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Breadcrumb from '../../../components/Breadcrumb';
 import EventCard from '../components/EventCard';
 import NoDataView from '../../../components/NoDataView';
+import { useDispatch } from 'react-redux';
+import * as AppActions from '../../../store/actions/AppActions'
 
 const EventView = () => {
-  const { events } = useSelector((state) => state.PackageReducer);
+  const dispatch = useDispatch();
+  const { events } = useSelector((state) => state.AppReducer);
 
   const currentDate = new Date(); // Get the current date
+
+  useEffect(()=>{
+    dispatch(AppActions.setEvents('university'));
+  },[])
 
   const previousEvents = events.filter((event) => {
     const eventDate = new Date(event.date);

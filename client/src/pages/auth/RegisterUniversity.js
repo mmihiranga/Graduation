@@ -28,6 +28,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import Navbar from "../../components/ResponsiveAppBar";
+import Api from '../../Api'
 // import API from './../api'
 const Alert = React.forwardRef((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -234,8 +235,7 @@ const RegisterMother = () => {
         handleOpenSnackbar();
       } else {
         try {
-
-          const result = await axios.post("http://localhost:5000/api/user/create", userDetails);
+          const result = await Api.post("/user/create", userDetails);
           console.log("result:::::::", result);
           // let decodedToken = jwt_decode(result.data.token)
           localStorage.setItem('token', result.data.token)

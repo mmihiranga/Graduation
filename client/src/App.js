@@ -12,6 +12,7 @@ import RegisterUniversity from './pages/auth/RegisterUniversity';
 import StudentPortal from './pages/student/StudentPortal';
 import UniversityPortal from './pages/university/UniversityPortal';
 import ReusableSnackbar from './components/ReusableSnackbar';
+import AdminLogin from './pages/auth/AdminLogin';
 
 function App() {
   const location = useLocation();
@@ -41,6 +42,14 @@ function App() {
           element={
             <Suspense fallback={<PageLoader />}>
               <Home />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/adminLogin"
+          element={
+            <Suspense fallback={<PageLoader />}>
+              <AdminLogin />
             </Suspense>
           }
         />
