@@ -1,4 +1,77 @@
 const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+const saltRounds = 5;
+const jwt = require("jsonwebtoken");
+
+//Register a User | guest
+const createUser = async (req, res) => {
+  console.log("req",req)
+  if (req.body) {
+    let email = req.body.email;
+    let username = req.body.username;
+
+    await User.findOne({ email: email }, async (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        if (!result) {
+          bcrypt.genSalt(saltRounds, function (err, salt) {
+            bcrypt.hash(req.body.password, salt, async function (err, hash) {
+              req.body.password = hash;
+
+              const user = new User(req.body);
+              await user
+                .save()
+                .then((data) => {
+                  console.log(data);
+                  res.status(200).send(data);
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.status(500).send(err);
+                });
+            });
+          });
+        } else {
+          console.log("User Already Exist");
+          res.status(500).send({ message: "User Already Exist" });
+        }
+      }
+    });
+  }
+};
+
+//login Validate
+const validateUser = async (req, res) => {
+  await User.findOne({ email: req.body.email }, (err, user) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    } else {
+      if (user == null) return res.status(500).send("User Not Found");
+      bcrypt.compare(req.body.password, user.password, function (err, result) {
+        // result == true
+        console.log("r:::",result);
+        if (result) {
+          console.log(user);
+          // const token = jwt.sign(
+          //   {
+          //     fullName: user.fullName,
+          //     email: user.email,
+          //   },
+          //   process.env.JWT_SECRET
+          // );
+
+          res.send({ userDetails: user });
+        } else {
+          console.log("Credentials Does Not Matched");
+          res.status(500).send("Credentials Does Not Matched");
+        }
+      });
+    }
+  });
+};
+
 
 const getAllUsers = async (req, res) => {
   try {
@@ -21,14 +94,6 @@ const getUserById = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
 
 const updateUser = async (req, res) => {
   try {
@@ -60,6 +125,7 @@ module.exports = {
   getAllUsers,
   getUserById,
   createUser,
+  validateUser,
   updateUser,
   deleteUser,
 };

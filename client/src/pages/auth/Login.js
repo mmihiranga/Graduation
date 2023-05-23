@@ -13,11 +13,12 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { login, userInfo } from '../redux/user';
 // import jwt_decode from "jwt-decode";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/ResponsiveAppBar";
 // import api from "../api";
 // import { useSelector, useDispatch } from 'react-redux';
 // import { login, userInfo } from '../redux/user';
+import axios from 'axios'
 
 const Alert = React.forwardRef((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -159,7 +160,7 @@ const Login = () => {
   const [snackbarMsg, setSnackbarMsg] = useState("");
   //   const user = useSelector((state) => state.user)
   //   const dispatch = useDispatch();
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
   // const dispatch = useDispatch();
 
   const handleOpenSnackbar = () => {
@@ -179,69 +180,72 @@ const Login = () => {
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("userDetails:::", userDetails);
 
-    // if (userDetails.password !== "" && userDetails.username !== "") {
+    if (userDetails.password !== "" && userDetails.email !== "") {
 
-    //   if (!isValidEmail(userDetails.email)) {
-    //     setSnackbarType("error")
-    //     setSnackbarMsg("Please enter a valid email")
-    //     handleOpenSnackbar()
-    //   } else {
-    //     try {
-    //       const result = await api.post('user/validate', userDetails)
-    //       console.log("result", result)
+      if (!isValidEmail(userDetails.email)) {
+        setSnackbarType("error")
+        setSnackbarMsg("Please enter a valid email")
+        handleOpenSnackbar()
+      } else {
+        try {
+          console.log("userDetails:::", userDetails);
 
-    //       if (result.data.userDetails.userType === "instructor") {
-    //         if (result.data.userDetails.isVerified && result.data.userDetails.isVerified == "approved") {
-    //           setSnackbarType("success")
-    //           setSnackbarMsg("Logged In Successfully")
-    //           handleOpenSnackbar()
-    //           let decodedToken = jwt_decode(result.data.token)
-    //           localStorage.setItem('token', result.data.token)
-    //           localStorage.setItem('userInfo', JSON.stringify(result.data.userDetails))
-    //           dispatch(login({ 'fullName': decodedToken.fullName, 'email': decodedToken.email }))
-    //           dispatch(userInfo(result.data.userDetails))
-    //           navigate('/insProfile')
+          const result = await axios.post("http://localhost:5000/api/user/validate",  userDetails)
+          console.log("result", result)
 
-    //         }
-    //         else if (result.data.userDetails.isVerified && result.data.userDetails.isVerified == "rejected") {
-    //           setSnackbarType("error")
-    //           setSnackbarMsg("Your account request has been rejected by the admin")
-    //           handleOpenSnackbar()
+          if (result.data.userDetails.userType === "university") {
+            if (result.data.userDetails.isVerified && result.data.userDetails.isVerified == "verified") {
+              setSnackbarType("success")
+              setSnackbarMsg("Logged In Successfully")
+              handleOpenSnackbar()
+              // let decodedToken = jwt_decode(result.data.token)
+              localStorage.setItem('token', result.data.token)
+              localStorage.setItem('userInfo', JSON.stringify(result.data.userDetails))
+              // dispatch(login({ 'fullName': decodedToken.fullName, 'email': decodedToken.email }))
+              // dispatch(userInfo(result.data.userDetails))
+              navigate('/')
 
-    //         }
-    //         else {
-    //           setSnackbarType("warning")
-    //           setSnackbarMsg("Your account request is still processing")
-    //           handleOpenSnackbar()
-    //         }
-    //       }
-    //       else {
-    //         setSnackbarType("success")
-    //         setSnackbarMsg("Logged In Successfully")
-    //         handleOpenSnackbar()
-    //         let decodedToken = jwt_decode(result.data.token)
-    //         localStorage.setItem('token', result.data.token)
-    //         localStorage.setItem('userInfo', JSON.stringify(result.data.userDetails))
-    //         dispatch(login({ 'fullName': decodedToken.fullName, 'email': decodedToken.email }))
-    //         dispatch(userInfo(result.data.userDetails))
-    //         navigate('/')
-    //       }
+            }
+            else if (result.data.userDetails.isVerified && result.data.userDetails.isVerified == "rejected") {
+              setSnackbarType("error")
+              setSnackbarMsg("Your account request has been rejected by the admin")
+              handleOpenSnackbar()
 
-    //     } catch (error) {
-    //       console.log("error", error)
-    //       setSnackbarType("error")
-    //       setSnackbarMsg(error.response.data)
-    //       handleOpenSnackbar()
-    //     }
-    //   }
+            }
+            else {
+              setSnackbarType("warning")
+              setSnackbarMsg("Your account request is still processing")
+              handleOpenSnackbar()
+            }
+          }
+          else {
+            setSnackbarType("success")
+            setSnackbarMsg("Logged In Successfully")
+            handleOpenSnackbar()
+            // let decodedToken = jwt_decode(result.data.token)
+            localStorage.setItem('token', result.data.token)
+            localStorage.setItem('userInfo', JSON.stringify(result.data.userDetails))
+            // dispatch(login({ 'fullName': decodedToken.fullName, 'email': decodedToken.email }))
+            // dispatch(userInfo(result.data.userDetails))
+            navigate('/')
+          }
 
-    // }
-    // else {
-    //   setSnackbarType("error")
-    //   setSnackbarMsg("Please fill all the fields")
-    //   handleOpenSnackbar()
-    // }
+        } catch (error) {
+          console.log("error", error)
+          setSnackbarType("error")
+          setSnackbarMsg(error.response.data)
+          handleOpenSnackbar()
+        }
+      }
+
+    }
+    else {
+      setSnackbarType("error")
+      setSnackbarMsg("Please fill all the fields")
+      handleOpenSnackbar()
+    }
 
   };
 
