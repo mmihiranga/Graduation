@@ -10,11 +10,12 @@ import {
 } from '@mui/icons-material';
 import styled from 'styled-components';
 import { mobile } from '../utils/responsive';
+import Typography from '@mui/material/Typography';
 
 const Container = styled.div`
   display: flex;
   ${mobile({ flexDirection: 'column' })}
-  background-color: #2148C0;
+  background-color: #222325;
 `;
 
 const Left = styled.div`
@@ -30,6 +31,7 @@ const Logo = styled.img`
 
 const Desc = styled.p`
   margin: 20px 0px;
+  color: #fff;
 `;
 
 const SocialContainer = styled.div`
@@ -56,6 +58,7 @@ const Center = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 30px;
+  color: #fff;
 `;
 
 const List = styled.ul`
@@ -64,11 +67,13 @@ const List = styled.ul`
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+  color: #fff;
 `;
 
 const ListItem = styled.li`
   width: 50%;
   margin-bottom: 10px;
+  color: #fff;
 `;
 
 const Right = styled.div`
@@ -81,6 +86,7 @@ const ContactItem = styled.div`
   margin-bottom: 20px;
   display: flex;
   align-items: center;
+  color: #fff;
 `;
 
 const Payment = styled.img`
@@ -91,7 +97,23 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo src="https://i.ibb.co/H2tcszD/logo.png" />
+        <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          href="/"
+          sx={{
+            mr: 2,
+            display: { xs: 'none', md: 'flex' },
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            letterSpacing: '.3rem',
+            color: '#fff',
+            textDecoration: 'none',
+          }}
+        >
+          My Convo
+        </Typography>
         <Desc>
           There are many variations of passages of Lorem Ipsum available, but
           the majority have suffered alteration in some form, by injected
@@ -116,28 +138,27 @@ const Footer = () => {
         <Title>Useful Links</Title>
         <List>
           <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Man Fashion</ListItem>
-          <ListItem>Woman Fashion</ListItem>
-          <ListItem>Accessories</ListItem>
+          <ListItem>Services</ListItem>
+          <ListItem>Photography</ListItem>
+          <ListItem>Events</ListItem>
+          <ListItem>Portals</ListItem>
           <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
-          <ListItem>Wishlist</ListItem>
+          <ListItem>Contact</ListItem>
+          <ListItem>About</ListItem>
           <ListItem>Terms</ListItem>
+          <ListItem>Conditions</ListItem>
         </List>
       </Center>
       <Right>
         <Title>Contact</Title>
         <ContactItem>
-          <Room style={{ marginRight: '10px' }} /> 321, Highlevel Road,
-          Nugegoda, Colombo
+          <Room style={{ marginRight: '10px', color: 'white' }} /> 71 Cherry Court SOUTHAMPTON SO53 5PD UK
         </ContactItem>
         <ContactItem>
-          <Phone style={{ marginRight: '10px' }} /> +94 112 244 578
+          <Phone style={{ marginRight: '10px' }} /> +44 797 577 7666
         </ContactItem>
         <ContactItem>
-          <MailOutline style={{ marginRight: '10px' }} /> info@shiftclothing.com
+          <MailOutline style={{ marginRight: '10px' }} /> info@myconvo.co.uk
         </ContactItem>
         <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
       </Right>
