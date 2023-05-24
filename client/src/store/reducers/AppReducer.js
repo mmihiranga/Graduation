@@ -21,6 +21,10 @@ const initialState = {
     snackbarSeverity: 'success',
     snackbarAutoHideDuration: 5000,
   },
+
+  events:[],
+
+  userInfo:null,
 };
 
 const AppReducer = (state = initialState, action) => {
@@ -116,6 +120,24 @@ const AppReducer = (state = initialState, action) => {
         isStudentPhone: true,
         isStudentAddress: true,
         isStudentImage: true,
+      };
+
+    case AppTypes.SET_EVENTS:
+      return {
+        ...state,
+        events: action.payload,
+      };
+
+    case AppTypes.UPDATE_EVENT:
+      return {
+        ...state,
+        events: action.payload,
+      };
+
+    case AppTypes.SET_USER_INFO:
+      return {
+        ...state,
+        userInfo: action.payload,
       };
 
     default:

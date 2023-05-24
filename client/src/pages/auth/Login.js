@@ -19,6 +19,8 @@ import Navbar from "../../components/ResponsiveAppBar";
 // import { useSelector, useDispatch } from 'react-redux';
 // import { login, userInfo } from '../redux/user';
 import axios from 'axios'
+import * as AppActions from '../../store/actions/AppActions'
+import { useDispatch } from "react-redux";
 
 const Alert = React.forwardRef((props, ref) => {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -161,7 +163,7 @@ const Login = () => {
   //   const user = useSelector((state) => state.user)
   //   const dispatch = useDispatch();
   let navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleOpenSnackbar = () => {
     setOpenSnackbar(true);
@@ -196,7 +198,7 @@ const Login = () => {
           console.log("result", result)
 
           if (result.data.userDetails.userType === "university") {
-            if (result.data.userDetails.isVerified && result.data.userDetails.isVerified == "verified") {
+            if (result.data.userDetails.isVerified && result.data.userDetails.isVerified == "approved") {
               setSnackbarType("success")
               setSnackbarMsg("Logged In Successfully")
               handleOpenSnackbar()
@@ -205,8 +207,8 @@ const Login = () => {
               localStorage.setItem('userInfo', JSON.stringify(result.data.userDetails))
               // dispatch(login({ 'fullName': decodedToken.fullName, 'email': decodedToken.email }))
               // dispatch(userInfo(result.data.userDetails))
-              navigate('/')
-
+              navigate('/university')
+              dispatch(AppActions.setUserInfo(result.data.userDetails))
             }
             else if (result.data.userDetails.isVerified && result.data.userDetails.isVerified == "rejected") {
               setSnackbarType("error")
@@ -229,6 +231,7 @@ const Login = () => {
             localStorage.setItem('userInfo', JSON.stringify(result.data.userDetails))
             // dispatch(login({ 'fullName': decodedToken.fullName, 'email': decodedToken.email }))
             // dispatch(userInfo(result.data.userDetails))
+            dispatch(AppActions.setUserInfo(result.data.userDetails))
             navigate('/')
           }
 
@@ -322,7 +325,7 @@ const Login = () => {
           </ButtonContainer>
           <LogInDiv>
             Don’t have an account?
-            <Link style={{ textDecoration: 'none' }} to="/registerType"> <LogInSpan> Sign Up</LogInSpan></Link>
+            <Link style={{ textDecoration: 'none' }} to="/regUniversity"> <LogInSpan> Register University</LogInSpan></Link>
           </LogInDiv>
         </Wrapper>
       </Container>

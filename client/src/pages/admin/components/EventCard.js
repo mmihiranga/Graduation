@@ -11,6 +11,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PropTypes from 'prop-types';
 import { Colors } from '../../../values/colors';
 import IMAGE from '../../../assets/Images/portfolio/portfolio-2.jpg';
+import { useDispatch, useSelector } from 'react-redux';
+import * as AppActions from '../../../store/actions/AppActions';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -55,9 +57,11 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-const EventCard = ({ eventItem }) => {
-  const [loading, setLoading] = useState(false);
+const EventCard = ({ eventItem, isAdmin = true }) => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(false);
+
+  const { isLoading } = useSelector((state) => state.AppReducer);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,13 +70,8 @@ const EventCard = ({ eventItem }) => {
     setAnchorEl(false);
   };
 
-  const handleClickApprove = () => {
-    setLoading(true);
-    handleClose();
-  };
-
-  const handleClickCancel = () => {
-    setLoading(true);
+  const handleClickVerify = async (type, id) => {
+    await dispatch(AppActions.updateEvent({ type, id }));
     handleClose();
   };
 
@@ -100,69 +99,89 @@ const EventCard = ({ eventItem }) => {
       >
         <Typography>#123</Typography>
         <Typography>{eventItem?.date}</Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Typography
-            variant="h5"
-            fontWeight="400"
+        {isAdmin && (
+          <Box
             sx={{
-              color: Colors.white,
-              backgroundColor: Colors.green,
-              px: 1,
-              py: 0.2,
-              borderRadius: 1,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
           >
-            Approved
-          </Typography>
-          {loading ? (
-            <IconButton>
-              <CircularProgress color="success" size={25} />
-            </IconButton>
-          ) : (
-            <IconButton
-              aria-label="more"
-              id="long-button"
-              aria-controls={anchorEl ? 'long-menu' : undefined}
-              aria-expanded={anchorEl ? 'true' : undefined}
-              aria-haspopup="true"
-              onClick={handleClick}
+            <Typography
+              variant="h5"
+              fontWeight="400"
+              sx={{
+                color: Colors.white,
+                backgroundColor:
+                  eventItem?.isVerified === 'pending'
+                    ? Colors.yellow
+                    : eventItem?.isVerified === 'approved'
+                    ? Colors.green
+                    : Colors.cancelRed,
+                px: 1,
+                py: 0.2,
+                borderRadius: 1,
+              }}
             >
-              <MoreVertIcon />
-            </IconButton>
-          )}
+              {eventItem?.isVerified === 'pending'
+                ? 'Pending'
+                : eventItem?.isVerified === 'approved'
+                ? 'Approved'
+                : 'Rejected'}
+            </Typography>
+            {isLoading ? (
+              <IconButton>
+                <CircularProgress color="success" size={25} />
+              </IconButton>
+            ) : (
+              <IconButton
+                aria-label="more"
+                id="long-button"
+                aria-controls={anchorEl ? 'long-menu' : undefined}
+                aria-expanded={anchorEl ? 'true' : undefined}
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            )}
 
-          <StyledMenu
-            id="demo-customized-menu"
-            MenuListProps={{
-              'aria-labelledby': 'demo-customized-button',
-            }}
-            anchorEl={anchorEl}
-            open={anchorEl}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClickApprove} disableRipple>
-              <MdDone color={Colors.approveGreen} style={{ marginRight: 10 }} />
-              Approve
-            </MenuItem>
-            <MenuItem onClick={handleClickCancel} disableRipple>
-              <MdClose color={Colors.cancelRed} style={{ marginRight: 10 }} />
-              Reject
-            </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
-              <RxDotsHorizontal
-                color={Colors.secondary}
-                style={{ marginRight: 10 }}
-              />
-              More
-            </MenuItem>
-          </StyledMenu>
-        </Box>
+            <StyledMenu
+              id="demo-customized-menu"
+              MenuListProps={{
+                'aria-labelledby': 'demo-customized-button',
+              }}
+              anchorEl={anchorEl}
+              open={anchorEl}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => handleClickVerify('approved', eventItem?._id)}
+                disableRipple
+              >
+                <MdDone
+                  color={Colors.approveGreen}
+                  style={{ marginRight: 10 }}
+                />
+                Approve
+              </MenuItem>
+              <MenuItem
+                onClick={() => handleClickVerify('reject', eventItem?._id)}
+                disableRipple
+              >
+                <MdClose color={Colors.cancelRed} style={{ marginRight: 10 }} />
+                Reject
+              </MenuItem>
+              <MenuItem onClick={handleClose} disableRipple>
+                <RxDotsHorizontal
+                  color={Colors.secondary}
+                  style={{ marginRight: 10 }}
+                />
+                More
+              </MenuItem>
+            </StyledMenu>
+          </Box>
+        )}
       </Box>
       <Box
         sx={{
@@ -198,9 +217,9 @@ const EventCard = ({ eventItem }) => {
             height: 150,
           }}
         >
-          <Typography>Event Name : {eventItem?.name}</Typography>
-          <Typography>Description : {eventItem?.description}</Typography>
-          <Typography>Duration : {eventItem?.duration}</Typography>
+          <Typography>Event Name : {eventItem?.eventTitle}</Typography>
+          <Typography>Address : {eventItem?.address}</Typography>
+          <Typography>Date : {eventItem?.date}</Typography>
           <Typography>Location : {eventItem?.location}</Typography>
         </Box>
       </Box>

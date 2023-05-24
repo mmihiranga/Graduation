@@ -26,7 +26,6 @@ const CartPopup = () => {
   const handleCheckout = () => {
     dispatch(CartActions.setCart([]));
     dispatch(CartActions.setCartPopUpShow(false));
-    console.log('checkout', studentCart);
   };
 
   return (
