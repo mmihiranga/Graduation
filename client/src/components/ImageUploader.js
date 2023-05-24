@@ -2,6 +2,7 @@ import React from 'react';
 import { Uploader } from 'uploader'; // Installed by "react-uploader".
 import { UploadButton } from 'react-uploader';
 import { Button } from '@mui/material';
+import { PropTypes } from 'prop-types';
 import { Colors } from '../values/colors';
 
 const uploader = Uploader({
@@ -49,5 +50,8 @@ function ImageUploader({ onFileUpload }) {
     </div>
   );
 }
+ImageUploader.propTypes = {
+  onFileUpload: PropTypes.func,
+};
 
 export default ImageUploader;

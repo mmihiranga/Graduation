@@ -94,7 +94,6 @@ function App() {
         open={isSnackbarOpen}
         autoHideDuration={snackbarBody.snackbarAutoHideDuration}
       />
-      ;
     </Box>
   );
 }
